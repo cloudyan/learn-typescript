@@ -185,3 +185,8 @@ const person2: Person<string> = {
   documents: 'passport, P45',
 };
 ```
+
+## 一些注意事项
+
+- number 就可以赋值给 {}、Object 类型，但是不能赋值给 object 类型
+- 使用 `Record<string, any>` 代替 `object`
