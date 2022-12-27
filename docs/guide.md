@@ -6,19 +6,20 @@
    1. TypeScript 与 JavaScript 的区别
    2. 典型 TypeScript 工作流程
 2. TypeScript 类型基础
-   1. Boolean
-   2. Number
-   3. String
-   4. Symbol
-   5. Array
-   6. Enum
-   7. Any
-   8. Unknown
-   9. Tuple
-   10. Void
-   11. Null 和 Undefined
-   12. object, Object 和 {}
-   13. Nerver
+   1. 布尔 `boolean`
+   2. 数字 `number`
+   3. 字符串 `string`
+   4. `symbol`
+   5. 数组 `number[]` / `Array<number>`
+   6. 枚举 `enum` Color { RED, GREEN, BLUE }
+   7. 元组 `tuple`
+   8. `any`
+   9. `void`
+   10. `unknown`
+   11. `null` 和 `undefined`
+   12. `never`
+   13. `object`, `Object` 和 `{}`
+   14. TS 类型的值 = TS 基础类型 + JS 值，并且可以混用。
 3. TypeScript 断言
    1. 类型断言
    2. 非空断言
@@ -47,7 +48,7 @@
    1. 数组解构
    2. 数组展开运算符
    3. 数组遍历
-9. TypeScript 对象
+9.  TypeScript 对象
    1. 对象策略
    2. 对象展开运算符
 10. TypeScript 接口
@@ -89,3 +90,5 @@
     5. TypeScript AST Viewer
     6. TypeDoc
     7. TypeScript ESLint
+
+

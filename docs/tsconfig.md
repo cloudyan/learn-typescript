@@ -51,6 +51,7 @@ tsconfig.json 包含 TypeScript 编译的相关配置，通过更改编译配置
   // 指定需要编译文件 否则默认当前目录下除了exclude之外的所有 .ts, .d.ts,.tsx 文件
   // files 适用于比较小型的项目，规定几个特定的文件
   "files": [],
+  // 指定要编译的路径列表
   // 指定需要编译文件 否则默认当前目录下除了exclude之外的所有.ts, .d.ts,.tsx 文件
   "inculde": [],
   // 不编译某些文件
@@ -75,7 +76,7 @@ tsconfig.json 包含 TypeScript 编译的相关配置，通过更改编译配置
 
     /* 基本选项 */
     // 指定 ECMAScript 目标版本: 'ES3' (default), 'ES5', 'ES6'/'ES2015', 'ES2016', 'ES2017', or 'ESNEXT'
-    // target 是编译成哪个版本的js
+    // target 指定编译成哪个版本的js
     "target": "es5",
     // 指定使用模块: 'commonjs', 'amd', 'system', 'umd' or 'es2015'
     // module 是模板生成的形式，默认情况下，当target是es3的时候，那module默认为commonjs形式，否则为es6形式。
@@ -85,89 +86,94 @@ tsconfig.json 包含 TypeScript 编译的相关配置，通过更改编译配置
        对于 --target ES5: DOM,ES5,ScriptHost
        对于 --target ES6: DOM,ES6,DOM.Iterable,ScriptHost
        TS 绝不会在您的代码中注入polyfill,所以需要你自己制定编译lib */
-    // 指定要包含在编译中的库文件
+    // 指定要包含在编译中的库文件（如 es6,dom）
     // 引入ES的功能库，比如想在项目中用js中Set，Map等新的数据结构，或promise等，那要在lib中引入es2015
     "lib": [],
-    // 允许编译 javascript 文件
+    // 是否允许编译 javascript 文件(默认 false)
     "allowJs": true,
-    // 报告 javascript 文件中的错误
-    /* 是否检测JS的语法, 例如下面的语法编辑器会报错
+    // 是否检查和报告 javascript 文件中的错误，默认 false
+    /* 检测JS的语法, 例如下面的语法编辑器会报错
        let name = 'paul';
        console.log(name.a.b) */
     "checkJs": true,
-    // 指定 jsx 代码的生成: 'preserve', 'react-native', or 'react'
+    // 指定 jsx 代码用于的开发环境: 'preserve', 'react-native', or 'react'
     "jsx": "preserve",
-    /* 如果设为true，编译每个ts文件之后会生成一个js文件和一个声明文件,
-       declaration 和 allowJs 不能同时设为 true */
+    /* 是否在编译的时候生成相应的d.ts声明文件
+       如果设为true，编译每个ts文件之后会生成一个js文件和一个声明文件,
+       但 declaration 和 allowJs 不能同时设为 true */
     // 生成相应的 '.d.ts' 文件
     "declaration": true,
-    // 值为true或false，指定是否为声明文件.d.ts生成map文件
+    // 用来指定是否为声明文件.d.ts生成map文件
     "declarationMap": true,
     // 用来指定编译时是否生成 .map 文件
     "sourceMap": true,
-    // 当module设置为 'amd' and 'system'的时候可以使用此命令, 这样可以将ts文件打包到一个目录下
-    // 将输出文件合并为一个文件
+    // 将输出文件合并为一个文件，只有设置 module 为 'amd' 和 'system' 模块是才支持这个配置
     "outFile": "./",
     // outDir 编译后的文件存到到哪个目录下, 默认是每一个ts文件的当前目录, 下面的配置就是把ts编译到build目录下
-    // 指定输出目录
-    "outDir": "./build",
+    // 指定输出目录，值为一个文件夹路径字符串，输出的文件都将放置在这个文件夹
     // 用来控制输出目录结构 --outDir (下面单独介绍)
+    "outDir": "./build",
+    // 指定编译文件的根目录，编译器会在根目录查找入口文件
     "rootDir": "./",
-    // 是否编译构建引用项目, 很复杂后面介绍
+    // 是否编译构建引用项目（比较复杂）
     "composite": true,
     // 指定文件用来存储增量编译信息, 默认是 tsconfig.tsbuildinfo
     "tsBuildInfoFile": "./",
-    // 编译的时候删除注释
+    // 编译的时候删除注释，默认 false
     "removeComments": true,
     // 不生成编译文件，这个一般比较少用, 这个build目录下将没有任何文件, 但是会进行编译, 有错误会抛出
     "noEmit": true,
-    // 是否引入npm包tslib中的辅助函数,__extends等
+    // 是否引入 npm 包 tslib 中的辅助工具函数,__extends等, 默认 false
     // 从 tslib 导入辅助工具函数
     "importHelpers": true,
     // 当target为'ES5' or 'ES3'时，为'for-of', spread, and destructuring'中的迭代器提供完全支持
     "downlevelIteration": true,
-    // isolatedModules 的值为true或false，指定是否将每个文件作为单独的模块，默认为true，它不可以和declaration同时设定
+    // isolatedModules 是否将每个文件作为单独的模块，默认为true，它不可以和declaration同时设定
     // 将每个文件做为单独的模块 （与 'ts.transpileModule' 类似）
     "isolatedModules": true,
 
 
 
     /* 严格的类型检查选项 */
-    // 严格模式将会打开下面的几个选项(启用所有严格类型检查选项)
+    // 启用严格模式，将会打开下面的几个选项(会启用所有严格类型检查选项)
     "strict": true,
     /* 不允许变量或函数参数具有隐式any类型, 例如
       function(name) {
         return name;
       } */
     // 在表达式和声明上有隐含的 any类型时报错
+    // 开启后，则没有设置明确的类型会报错，默认值为false
     "noImplicitAny": true,
     // 启用严格的 null 类型检查, const teacher: string = null; 会报错
+    // null和undefined值不能赋值给非这两种类型的值，别的类型的值也不能赋给他们，除了any类型，
+    // 还有个例外就是undefined可以赋值给void类型
     "strictNullChecks": true,
     // 当 this 表达式值为 any 类型的时候，生成一个错误
     "noImplicitThis": true,
     // 对函数参数进行严格逆变比较
     "strictFunctionTypes": true,
     // 严格检查bind call apply
+    // 对bind、call和apply绑定的方法的参数的检测是否严格检测
     "strictBindCallApply": true,
     // 此规则将验证构造函数内部初始化前后已定义的属性。
+    // 会检查类的非undefined属性是否已经在构造函数里初始化，如果要开启这项，需要同时开启strictNullChecks,默认为false
     "strictPropertyInitialization": true,
     // 检测this是否隐式指定
+    // 当this表达式的值为any类型的时候，生成一个错误
     "noImplicitThis": true,
-    // 以严格模式检查每个模块，并在每个文件里加入 'use strict'
-    // 使用js的严格模式,在每一个文件上部声明 use strict
+    // 始终以严格模式检查每个模块，并且在编译之后的JS文件中加入"use strict"字符串，用来告诉浏览器该JS为严格模式
     "alwaysStrict": true,
 
     /* 额外的检查 Additional Checks */
-    // 默认false, 是否检测定义了但是没使用的变量
+    // 默认false, 检测是否有定义了但是没使用的变量（这个可以使用ESLint可以在你书写代码的时候做提示）
     // 有未使用的变量时，抛出错误
     "noUnusedLocals": true,
-    // 用于检查是否有在函数体中没有使用的参数
-    // 有未使用的参数时，抛出错误
+    // 检测到函数中有未使用的参数时，抛出错误
     "noUnusedParameters": true,
-    // 用于检查函数是否有返回值，设为true后，如果函数没有返回值则会提示
-    // 并不是所有函数里的代码都有返回值时，抛出错误
+    // 用于检查函数是否有返回值，设为true后，如果函数没有返回值则会提示，默认 false
+    // 当并不是所有函数里的代码都有返回值时，抛出错误
     "noImplicitReturns": true,
-    // 用于检查switch中是否有case没有使用break跳出switch
+    // 用于检查switch中是否有case没有使用break跳出switch，默认 false
     // 报告 switch 语句的 fallthrough 错误。（即，不允许 switch 的 case 语句贯穿）
     "noFallthroughCasesInSwitch": true,
 
@@ -178,11 +184,12 @@ tsconfig.json 包含 TypeScript 编译的相关配置，通过更改编译配置
     // 'node' (Node.js) or 'classic' (TypeScript pre-1.6)
     "moduleResolution": "node",
     // 复杂的很 下面单独介绍这三个模块 baseUrl paths rootDirs
-    // 用于解析非相对模块名称的基目录
+    // 用于设置解析非相对模块名称的基本目录，相对模块不会受到baseUrl的影响
     "baseUrl": "./",
-    // 模块名到基于 baseUrl 的路径映射的列表
+    // 用于设置模块名到基于 baseUrl 的路径映射的列表
     "paths": {},
     // 根文件夹列表，其组合内容表示项目运行时的结构内容
+    // 可以指定一个路径列表，在构建时编译器会将这个路径中的内容都放到一个文件夹中
     "rootDirs": [],
     // typeRoots 用来指定声明文件或文件夹的路径列表，如果指定了此项，则只有在这里列出的声明文件才会被加载
     "typeRoots": [],
@@ -205,7 +212,8 @@ tsconfig.json 包含 TypeScript 编译的相关配置，通过更改编译配置
     "sourceRoot": "./",
     // mapRoot 用于指定调试器找到映射文件而非生成文件的位置，指定map文件的根路径，该选项会影响.map文件中的sources属性
     "mapRoot": "./",
-    // inlineSourceMap 指定是否将map文件内容和js文件编译在一个同一个js文件中，如果设为true, 则map的内容会以//#soureMappingURL=开头，然后接base64字符串的形式插入在js文件底部
+    // inlineSourceMap 指定是否将map文件内容和js文件编译在同一个js文件中，
+    // 如果设为true, 则map的内容会以//#soureMappingURL=开头，然后接base64字符串的形式插入在js文件底部
     "inlineSourceMap": true,
     // inlineSources 用于指定是否进一步将ts文件的内容也包含到输出文件中, 要求同时设置了 --inlineSourceMap 或 --sourceMap 属性
     "inlineSources": true,

@@ -39,6 +39,7 @@ TypeScript 是一种由微软开发的自由和开源的编程语言。它是 Ja
 - 推荐:[TypeScript 基础类型](https://mp.weixin.qq.com/s/J3BM-Sb3okUy0-J_y7Fnzg)
   - [TypeScript 入门](https://juejin.cn/post/7018805943710253086)
 - 入门:[TypeScript 终极初学者指南](https://mp.weixin.qq.com/s/PwfuaEa9OD9XxVHLZA1TtA)
+- [Typescript 类型编程，从入门到念头通达](https://juejin.cn/post/7132490947320872974)
 - [使用 TypeScript 的几个常见错误！](https://mp.weixin.qq.com/s/ud0LFGXv0K6hj_bYOSbnHA)
 - [淘宝店铺 TypeScript 研发规约落地实践](https://mp.weixin.qq.com/s/a3OKOep9W7Cu81j7bKp3RQ)
 - [神光的编程秘籍-typescript](https://mp.weixin.qq.com/mp/appmsgalbum?__biz=Mzg3OTYzMDkzMg==&action=getalbum&album_id=2150422842549633025&scene=173&from_msgid=2247489158&from_itemidx=1&count=3&nolastread=1#wechat_redirect)

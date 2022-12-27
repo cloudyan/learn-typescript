@@ -1,5 +1,7 @@
 # 类型
 
+https://juejin.cn/post/6872111128135073806
+
 - [类型](#类型)
   - [TypeScript 基础类型](#typescript-基础类型)
     - [Boolean 类型](#boolean-类型)
@@ -72,7 +74,7 @@ let sym: symbol = Symbol("me");
 void 意思就是无效的, 一般只用在函数上，告诉别人这个函数没有返回值。
 
 > 默认情况下 null 和 undefined 是所有类型的子类型。也就是说你可以把 null 和 undefined 赋值给其他类型。
-> 如果你在tsconfig.json指定了"strictNullChecks":true ，即开启严格模式后，null 和 undefined 只能赋值给 void 和它们各自的类型。
+> 如果你在tsconfig.json指定了 `"strictNullChecks":true`, 即开启严格模式后，null 和 undefined 只能赋值给 void 和它们各自的类型。
 
 ### never 类型
 
@@ -85,11 +87,23 @@ never 类型表示的是那些永不存在的值的类型。例如never 类型�
 
 ### Unknown 类型
 
+unknown与any一样，所有类型都可以分配给unknown:
+
+unknown与any的最大区别是：
+
+任何类型的值可以赋值给any，同时any类型的值也可以赋值给任何类型。unknown 任何类型的值都可以赋值给它，但它只能赋值给unknown和any
+
 ### 对象类型
 
 #### object, Object 和 {} 类型
 
+1. `object` 用于表示非原始类型，即我们不能把 number、string、boolean、symbol 等原始类型赋值给 object。在严格模式下，null 和 undefined 类型也不能赋给 object。
+2. 大 `Object` 代表所有拥有 toString、hasOwnProperty 方法的类型，所以所有原始类型、非原始类型都可以赋给 Object(严格模式下 null 和 undefined 不可以)
+3. `{}` 空对象类型和大 Object 一样，也是表示原始类型和非原始类型的集合
+
 #### 函数
+
+
 
 ### 类型推论
 
@@ -101,16 +115,16 @@ never 类型表示的是那些永不存在的值的类型。例如never 类型�
 
 某些情况下，我们可能比typescript更加清楚的知道某个变量的类型，所以我们可能希望手动指定一个值的类型
 
-类型断言有两种方式
+类型断言有两种形式
 
-1. 尖括号写法
+1. 尖括号语法
 
     ```ts
     let str: any = "to be or not to be";
     let strLength: number = (<string>str).length;
     ```
 
-2. as 写法
+2. as 语法
 
     ```ts
     let str: any = "to be or not to be";
