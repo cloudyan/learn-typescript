@@ -133,6 +133,10 @@ tsconfig.json 包含 TypeScript 编译的相关配置，通过更改编译配置
     "isolatedModules": true,
 
 
+    // TS 中引入json文件，需要开启此项
+    "resolveJsonModule": true,
+
+
 
     /* 严格的类型检查选项 */
     // 启用严格模式，将会打开下面的几个选项(会启用所有严格类型检查选项)
@@ -194,6 +198,7 @@ tsconfig.json 包含 TypeScript 编译的相关配置，通过更改编译配置
     // typeRoots 用来指定声明文件或文件夹的路径列表，如果指定了此项，则只有在这里列出的声明文件才会被加载
     "typeRoots": [],
     // types用来指定需要包含的模块，只有在这里列出的模块的声明文件才会被加载进来
+    // 例如 reflect-metadata
     "types": [],
     // 用来指定允许从没有默认导出的模块中默认导入（只检查的作用）
     "allowSyntheticDefaultImports": true,

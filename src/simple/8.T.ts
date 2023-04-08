@@ -121,23 +121,27 @@ logLengths(arr);
 // 泛型接口
 // 当我们不知道对象中的某个值是什么类型时，可以使用泛型来传递该类型：
 // The type, T, will be passed in
-interface Person<T> {
+interface Person1<T> {
   name: string;
   age: number;
   documents: T;
 }
 
 // We have to pass in the type of `documents` - an array of strings in this case
-const person1: Person<string[]> = {
+const person1: Person1<string[]> = {
   name: 'ConardLi',
   age: 17,
   documents: ['passport', 'bank statement', 'visa'],
 };
 
 // Again, we implement the `Person` interface, and pass in the type for documents - in this case a string
-const person2: Person<string> = {
+const person2: Person1<string> = {
   name: 'Tom',
   age: 20,
   documents: 'passport, P45',
 };
 
+
+
+// 在业务代码中开发时我们并不推荐大家写泛型，但是为了得到更好的 typescript 体验我们可能需要了解一下常用组件库的泛型提示，这里做个简单列举。
+// 参见：https://pro.ant.design/zh-CN/docs/type-script

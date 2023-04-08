@@ -48,7 +48,7 @@
    1. 数组解构
    2. 数组展开运算符
    3. 数组遍历
-9.  TypeScript 对象
+9. TypeScript 对象
    1. 对象策略
    2. 对象展开运算符
 10. TypeScript 接口
