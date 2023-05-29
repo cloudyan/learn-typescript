@@ -48,7 +48,8 @@ tsconfig.json 包含 TypeScript 编译的相关配置，通过更改编译配置
 
 ```json
 {
-  // 指定需要编译文件 否则默认当前目录下除了exclude之外的所有 .ts, .d.ts,.tsx 文件
+  // 指定需要编译文件
+  // 否则默认当前目录下除了exclude之外的所有 .ts, .d.ts,.tsx 文件
   // files 适用于比较小型的项目，规定几个特定的文件
   "files": [],
   // 指定要编译的路径列表

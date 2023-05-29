@@ -57,20 +57,20 @@ let person6 = addID3(['ConardLi', 17]); // ERROR: argument should have a name pr
 // 在上面的例子中，返回类型与输入类型有关。我们用一个泛型来描述对应关系。
 
 // 另一个例子：如果需要接受多个类型的函数，最好使用泛型而不是 any。下面展示了使用 any 的问题：
-function logLength(a: any) {
+function logLength2(a: any) {
   console.log(a.length); // No error
   return a;
 }
 
 let hello = 'Hello world';
-logLength(hello); // 11
+logLength2(hello); // 11
 
 let howMany = 8;
-logLength(howMany); // undefined (but no TypeScript error - surely we want TypeScript to tell us we've tried to access a length property on a number!)
+logLength2(howMany); // undefined (but no TypeScript error - surely we want TypeScript to tell us we've tried to access a length property on a number!)
 
 
 // 我们可以尝试使用泛型：有报错反馈，可以帮助我们持续改进代码
-function logLength<T>(a: T) {
+function logLength3<T>(a: T) {
   console.log(a.length); // ERROR: TypeScript isn't certain that `a` is a value with a length property
   return a;
 }
@@ -80,16 +80,16 @@ interface hasLength {
   length: number;
 }
 
-function logLength<T extends hasLength>(a: T) {
+function logLength4<T extends hasLength>(a: T) {
   console.log(a.length);
   return a;
 }
 
 let hello = 'Hello world';
-logLength(hello); // 11
+logLength4(hello); // 11
 
 let howMany = 8;
-logLength(howMany); // Error: numbers don't have length properties
+logLength4(howMany); // Error: numbers don't have length properties
 
 
 // 我们也可以编写这样一个函数，它的参数是一个元素数组，这些元素都有一个 length 属性：
@@ -145,3 +145,20 @@ const person2: Person1<string> = {
 
 // 在业务代码中开发时我们并不推荐大家写泛型，但是为了得到更好的 typescript 体验我们可能需要了解一下常用组件库的泛型提示，这里做个简单列举。
 // 参见：https://pro.ant.design/zh-CN/docs/type-script
+
+
+import type dayjs from 'dayjs';
+import type { Dayjs } from 'dayjs';
+
+const dayjsFormat = (str: string | string[]) => {
+  if (typeof str === 'string') {
+    return dayjs(str);
+  } else if (Array.isArray(str)) {
+    return str.map(item => {
+      return item && dayjs(item);
+    });
+  }
+};
+
+const defaultValue = dayjsFormat('2023-04-17')
+const defaultValue2 = dayjsFormat(['2023-04-17', '2023-04-19'])
