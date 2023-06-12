@@ -1,0 +1,56 @@
+// @ts-check
+// 基本类型
+
+// 定义数组类型的三种方式
+
+/**
+ * 定义字符串数组类型
+ * @type {Array<string>}
+ */
+var strArr = ['1', '2'];
+
+//  以下是另外两种方式，作用和第一种一样
+/**
+ * @type {Array.<string>}
+ */
+/**
+ * @type {string[]}
+ */
+
+
+
+/**
+ * 定义boolean类型
+ * @type {boolean}
+ */
+var isSelected = false;
+
+
+
+/**
+ * 定义string类型
+ * @type {string}
+ */
+var strName = 'xyz';
+
+
+
+// TypeScript 中添加的类型
+
+/**
+ * 这是TypeScript定义的Navigator类型
+ * @type {Navigator}
+ */
+var navigator;
+
+/**
+ * 这是TypeScript定义的窗口类型
+ * @type {Window}
+ */
+var win;
+
+/**
+ * 这是TypeScript定义的HTML元素类型
+ * @type {HTMLElement}
+ */
+var rootElement = document.getElementById('root');
