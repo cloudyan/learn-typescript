@@ -10,6 +10,8 @@ TypeScript 是一种由微软开发的自由和开源的编程语言。它是 Ja
 2. 全面了解 `tsconfig`
 3. 最佳实践
 
+推荐：阮一峰新出的 [TypeScript 教程](https://wangdoc.com/typescript/)，非常不错，推荐阅读
+
 ## 对比
 
 1. `any` vs `unknown`
@@ -21,6 +23,16 @@ TypeScript 是一种由微软开发的自由和开源的编程语言。它是 Ja
 
 - any: 任何类型的值可以赋值给any，同时any类型的值也可以赋值给任何类型。
 - unknown: 任何类型的值都可以赋值给它，但它只能赋值给unknown和any
+
+### interface 与 type 的区别有下面几点
+
+1. `type` 能够表示非对象类型，而 `interface` 只能表示对象类型（包括数组、函数等）。
+2. `interface` 可以继承其他类型，`type` 不支持继承，只支持 `&` 运算符扩展，重新定义一个。
+3. 同名 `interface` 会自动合并，同名 `type` 则会报错。
+4. `interface` 不能包含属性映射（mapping），`type` 可以(`in keyof`)。
+5. `this` 关键字只能用于 `interface` 。
+6. `type` 可以扩展原始数据类型，`interface`  不行。
+7. `interface` 无法表达某些复杂类型（比如交叉类型和联合类型），但是 `type` 可以。
 
 ```ts
 // 什么时候推荐用 type 什么时候用 interface ？
@@ -39,7 +51,9 @@ interface FuncWithAttachment {
   someProperty: number;
 }
 
-const testFunc: FuncWithAttachment = {};
+const testFunc: FuncWithAttachment = (param) => {
+  return !!param;
+};
 const result = testFunc('mike'); // 有类型提醒
 testFunc.someProperty = 3; // 有类型提醒
 ```

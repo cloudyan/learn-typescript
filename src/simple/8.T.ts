@@ -162,3 +162,18 @@ const dayjsFormat = (str: string | string[]) => {
 
 const defaultValue = dayjsFormat('2023-04-17')
 const defaultValue2 = dayjsFormat(['2023-04-17', '2023-04-19'])
+
+
+// 示例
+function map<T, U>(
+  arr: T[],
+  f: (arg:T) => U
+):U[] {
+  return arr.map(f);
+}
+
+// 用法实例
+map<string, number>(
+  ['1', '2', '3'],
+  (n) => parseInt(n)
+); // 返回 [1, 2, 3]

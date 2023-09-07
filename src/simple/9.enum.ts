@@ -57,3 +57,41 @@ console.log(color); // [0, 1, 2]
 //编译之后的js如下：
 // var color = [0 /* RED */, 1 /* PINK */, 2 /* BLUE */];
 // 可以看到我们的枚举并没有被编译成js代码 只是把color这个数组变量编译出来了
+
+
+{
+  enum UserRoles {
+    ADMIN = 'ADMIN',
+    USER = 'USER',
+    GUEST = 'GUEST',
+  }
+
+  function getUserRole(role: UserRoles) {
+      // ...
+  }
+
+  getUserRole(UserRoles.ADMIN) // No Error
+  getUserRole('ADMIN'); // Error!
+}
+
+// 改写
+
+{
+  // https://dev.to/muszynov/something-about-typescript-enums-56jp
+  const USER_ROLES= {
+    ADMIN: 'ADMIN',
+    USER: 'USER',
+    GUEST: 'GUEST',
+  } as const;
+
+  type EnumValues<T> = T[keyof T];
+
+  type UserRoles = EnumValues<typeof USER_ROLES>;
+
+  function getUserRole(role: UserRoles) {
+    // ...
+  }
+
+  getUserRole('ADMIN') // No Error
+  getUserRole(USER_ROLES.ADMIN) // No Error
+}
