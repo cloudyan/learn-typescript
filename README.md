@@ -25,7 +25,7 @@ TypeScript 是一种由微软开发的自由和开源的编程语言。它是 Ja
 ```ts
 // 什么时候推荐用 type 什么时候用 interface ？
 
-// 推荐任何时候都是用 type， type 使用起来更像一个变量，与 interface 相比，type 的特点如下：
+// 推荐任何时候都是用 type，type 使用起来更像一个变量，与 interface 相比，type 的特点如下：
 
 // 表达功能更强大，不局限于 object/class/function
 // 要扩展已有 type 需要创建新 type，不可以重名
