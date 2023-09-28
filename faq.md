@@ -5,7 +5,53 @@
 3. 如何获取函数返回值的类型
 4. 如何获取函数参数的类型
 5. 如何支持运行时类型校验
+6. 为什么要使用d.ts
 
+### 为什么要使用d.ts
+
+有时，我们不免会引入外部的 JS库，这时TS就对引入的JS文件里变量的具体类型不明确了，为了告诉TS变量的类型，因此就有了.d.ts (d即declare)，ts的声明文件。
+
+“d.ts”文件用于为 TypeScript 提供有关用 JavaScript 编写的 API 的类型信息。简单讲，就是你可以在 ts 中调用的 js 的声明文件。TS的核心在于静态类型，我们在编写 TS 的时候会定义很多的类型，但是主流的库都是 JS编写的，并不支持类型系统。这个时候你不能用TS重写主流的库，这个时候我们只需要编写仅包含类型注释的 d.ts 文件，然后从您的 TS 代码中，可以在仍然使用纯 JS 库的同时，获得静态类型检查的 TS 优势。
+
+### window 上新增全局变量
+
+```ts
+// index.d.ts
+// 这是老方法，typescript 3.4 之后就废弃了
+declare global {
+  interface Window {
+    __microApps__: [];
+  }
+}
+```
+
+新方法
+
+```ts
+// index.d.ts 声明文件
+interface Window {
+  __microApps__: []
+}
+```
+
+无需配置文件即可
+
+types 扩展知识
+
+```json
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    // 默认情况下，所有的 @types 包都会在编译时应用，任意层的 node_modules/@types 都会被使用
+    // 如果你的类型定义不在这个文件夹中，可以使用 typesRoot 来配置，只有在 typeRoots 中的包才会被包含
+    // 此时
+    "typeRoots" : ["./typings"], // 现在，只有在 ./typings 中的才会应用，而 ./node_modules/@types 中的则不会
+   // 如果配置了 types，则只有列出的包才会包含。
+   "types" : ["node", "lodash", "express"],
+   // 如果配置为"types": []则不会包含任何包。
+  },
+}
+```
 
 ### 如何获取函数的返回值的类型？
 

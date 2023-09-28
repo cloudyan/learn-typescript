@@ -248,7 +248,9 @@ tsconfig.json 包含 TypeScript 编译的相关配置，通过更改编译配置
         test.ts
     version2
         demo.ts
-// 如果我们设置 "rootDir": "./src",那么我们的编译后的文件结构如下,需要注意的是项目中除了src目录中,其他地方不能有ts文件了
+
+// 如果我们设置 "rootDir": "./src"，那么我们的编译后的文件结构如下
+// 需要注意的是项目中除了src目录中，其他地方不能有ts文件了
 --build
     version1
         test.ts
