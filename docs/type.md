@@ -29,6 +29,20 @@ https://juejin.cn/post/6872111128135073806
     - [接口](#接口)
     - [泛型](#泛型)
     - [内置工具](#内置工具)
+      - [`Partial<Type>`](#partialtype)
+      - [`Required<Type>`](#requiredtype)
+      - [`Readonly<Type>`](#readonlytype)
+      - [`Record<Keys, Type>`](#recordkeys-type)
+      - [`Exclude<UnionType, ExcludedMembers>`](#excludeuniontype-excludedmembers)
+      - [`Extract<Type, Union>`](#extracttype-union)
+      - [`Pick<Type, Keys>`](#picktype-keys)
+      - [`Omit<Type, Keys>`](#omittype-keys)
+      - [`NonNullable<Type>`](#nonnullabletype)
+      - [`Parameters<Type>`](#parameterstype)
+      - [`ReturnType<Type>`](#returntypetype)
+      - [字符串类型工具](#字符串类型工具)
+      - [`Uppercase<StringType>`](#uppercasestringtype)
+      - [`Lowercase<StringType>`](#lowercasestringtype)
 
 
 ## TypeScript 基础类型
@@ -227,3 +241,46 @@ testAndFn({name: "黄老爷"}) // error TS2322: Type 'string' is not assignable 
 
 
 ### 内置工具
+
+TypeScript 内置了17个类型工具，可以直接使用。
+
+- `Awaited<Type>`
+- `ConstructorParameters<Type>`
+- `Exclude<UnionType, ExcludedMembers>`
+- `Extract<Type, Union>`
+- `InstanceType<Type>`
+- `NonNullable<Type>`
+- `Omit<Type, Keys>`
+- `OmitThisParameter<Type>`
+- `Parameters<Type>`
+- `Partial<Type>`
+- `Pick<Type, Keys>`
+- `Readonly<Type>`
+- `Record<Keys, Type>`
+- `Required<Type>`
+- `ReadonlyArray<Type>`
+- `ReturnType<Type>`
+- `ThisParameterType<Type>`
+- `ThisType<Type>`
+- `字符串类型工具`
+  - `Uppercase<StringType>`
+  - `Lowercase<StringType>`
+  - `Capitalize<StringType>`
+  - `Uncapitalize<StringType>`
+
+#### `Partial<Type>`
+#### `Required<Type>`
+#### `Readonly<Type>`
+#### `Record<Keys, Type>`
+#### `Exclude<UnionType, ExcludedMembers>`
+#### `Extract<Type, Union>`
+#### `Pick<Type, Keys>`
+#### `Omit<Type, Keys>`
+#### `NonNullable<Type>`
+#### `Parameters<Type>`
+#### `ReturnType<Type>`
+
+#### 字符串类型工具
+
+#### `Uppercase<StringType>`
+#### `Lowercase<StringType>`
