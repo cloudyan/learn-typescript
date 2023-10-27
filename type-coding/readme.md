@@ -6,7 +6,7 @@
 type IsSub = SubType extends ParentType ? true : false; // IsSub 的类型值为 true
 ```
 
-### 获取类型所有属性 key
+### 获取类型所有属性 keyof
 
 想要知道对象有哪些属性，可以使用 keyof 关键词。例如：
 
@@ -17,11 +17,15 @@ interface Person2 {
 }
 
 type Keys = keyof Person2; // 返回属性的联合联合类型
+// 'name' | 'age'
 
 // 箭头函数类型和空对象没有 key。
 type F = () => void;
 type K = keyof F; // never;
 type Foo = keyof {}; // never;
+
+// 悬浮上去，即可知道 myAny 的类型结果
+type myAny = keyof any;
 ```
 
 ## 条件语句
