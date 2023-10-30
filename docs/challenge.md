@@ -43,10 +43,21 @@ type result = Required<Person>
 
 观察以上结果可以得出结论：`-?`是去掉类型中属性后面的`?`，整个`Required`的实际效果是去掉`T`类型中所有属性键后面的`?`，让所有属性变成必填的。
 
+TODO: `+` 有使用场景吗?
+
+```ts
+// 省略了+号
+type MyPartial<T> = {
+  [P in keyof T]?: T[P]
+}
+```
+
 ### keyof 和 in
+
 `keyof`和`in`经常会连在一起使用，当它们连在一起使用时，通常表示一个迭代的过程。
 
 #### keyof
+
 在`TS`中，`keyof T`这段代码表示获取`T`类型中所有属性键，这些属性键组合成一个联合类型，例如：
 
 ```ts
@@ -56,12 +67,17 @@ type Person = {
 }
 // 结果：'name' | 'age'
 type result = keyof Person
-
 ```
 
 `TS`中的`keyof T`，它有点类似`JavaScript`中的`Object.keys()`，它们的共同点都是获取属性键的集合，只不过`keyof T`得到的结果是一个联合类型，而`Object.keys()`得到的是一个数组。
 
+```ts
+// 结果：'string' | 'number' | 'symbol'
+type all = keyof any
+```
+
 #### in
+
 `in`操作符的右侧通常跟一个联合类型，可以使用`in`来迭代这个联合类型，如下：
 
 ```ts
@@ -102,8 +118,8 @@ for (let key in obj)
 
 ```
 
-
 ### typeof
+
 `TS`中的`typeof`，可以用来获取一个`JavaScript`变量的类型，经常用于获取一个普通对象或者一个函数的类型，如下：
 
 ```ts
@@ -119,11 +135,11 @@ const obj = {
 type t1  = typeof add
 // 结果：{ name: string; age: number; }
 type t2 = typeof obj
-
 ```
 
 
 ### never
+
 `never`类型表示永远不会有值的一种类型。
 
 例如，如果一个函数抛出一个错误，那么这个函数就可以用`never`或者`void`来表示其返回值，如下：
@@ -137,9 +153,7 @@ function handlerError(message: string): never {
 function handlerError(message: string): void {
   throw new Error(message)
 }
-
 ```
-
 
 关于`never`的另外一个知识点是：如果一个联合类型中存在`never`，那么实际的联合类型并不会包含`never`，如下：
 
@@ -153,15 +167,16 @@ type test = 'name' | 'age'
 
 
 ### extends
+
 `extends`关键词，一般有两种用法：**类型约束**和**条件类型**。
 
 #### 类型约束
+
 类型约束经常和泛型一起使用：
 
 ```ts
 // 类型约束
 U extends keyof T
-
 ```
 
 `keyof T`是一个整体，它表示一个联合类型。`U extends Union`这一整段表示`U`的类型被收缩在一个联合类型的范围内。例如： `U extends 'name' | 'age'`，则表示`U`只能为`name`或者`age`二者其中之一。
@@ -218,9 +233,7 @@ result: 'name' | never => 'name'
 
 ```ts
 type result = 'name' | never => 'name'
-
 ```
-
 
 ### infer
 
@@ -240,7 +253,6 @@ type result = ReturnType<typeof add>
 
 ```
 
-
 代码详解：
 
 * `T extends (...args: any) => infer R`：如果不看`infer R`，这段代码实际表示：`T`是不是一个函数类型。
@@ -256,12 +268,10 @@ type result = ReturnType<typeof add>
 
 // 模板字符串中的值，使用变量name占位表示
 const str = `hello, ${name}`
-
 ```
 
-
-
 ### & 符号
+
 在`TS`中有两种类型值得我们重点关注：**联合类型**和**交叉类型**。
 
 联合类型一般适用于基本类型的**合并**，它使用`|`符号进行连接，如下：
@@ -276,7 +286,6 @@ type result = 'name' | 1 | true | null
 
 ```ts
 type result = T & U
-
 ```
 
 `T & U`表示一个新的类型，其中这个类型包含`T`和`U`中所有的键，这和`JavaScript`中的`Object.assign()`函数的作用非常类似。
@@ -307,15 +316,13 @@ const obj2 = { age: 23 }
 // js结果：{ name：'AAA'; age: 23; }
 // ts结果：{ name: string; age: number; }
 const result = merge(obj1, obj2)
-
 ```
 
-
 ## 初级
-### 内置Pick(选取)
+
+### 内置 Pick(选取)
 
 <link-and-solution num="4" />
-
 
 #### 用法
 `Pick`表示从一个类型中选取指定的几个字段组合成一个新的类型，用法如下：
@@ -329,7 +336,6 @@ type Person = {
 }
 // 结果: { name: string; address: string; }
 type PickResult = Pick<Person, 'name' | 'address'>
-
 ```
 
 #### 实现方式
@@ -338,7 +344,6 @@ type PickResult = Pick<Person, 'name' | 'address'>
 type MyPick<T, K extends keyof T> = {
   [P in K]: T[P]
 }
-
 ```
 
 代码详解：
@@ -348,16 +353,22 @@ type MyPick<T, K extends keyof T> = {
 ```ts
 // 报错：phone无法分配给keyof T
 type result = MyPick<Person, 'name' | 'phone'>
-
 ```
 
+NOTE: 那如果实现 Omit，过滤某个属性不要展示
 
+```ts
+// TODO:
+type MyOmit<T, K extends keyof T> = {
+}
+```
 
 ### 内置Readonly(只读)
 
 <link-and-solution num="7" />
 
 #### 用法
+
 `Readonly`是用来让所有属性变为只读，其用法为：
 
 ```ts
@@ -377,16 +388,14 @@ type result = MyReadonly<Person>
 type MyReadonly<T> = {
   readonly [P in keyof T]: T[P]
 }
-
 ```
-
 
 ### TupleToObject(元组转对象)
 
 <link-and-solution num="11" />
 
-
 #### 用法
+
 `TupleToObject<T>`是用来把一个元组转换成一个`key/value`相同的对象，例如：
 
 ```ts
@@ -394,7 +403,6 @@ type MyReadonly<T> = {
 const tuple = ['msg', 'name'] as const
 // 结果：{ msg: 'msg'; name: 'name'; }
 type result = TupleToObject<typeof tuple>
-
 ```
 
 #### 实现方式
@@ -403,19 +411,25 @@ type result = TupleToObject<typeof tuple>
 type TupleToObject<T extends readonly any[]> = {
   [P in T[number]]: P
 }
-
 ```
 
 代码详解：
+
 * `as const`：常用来进行常量断言，在此处表示将`['msg','name']`推导常量元组，表示其不能新增、删除、修改元素，可以使用`as readonly`来辅助理解。
 * `T[number]`：表示返回数组中所有数字型索引的元素，形成一个联合类型，例如：`'msg'|'name'`。
+
+这里为什么要用 `T extends readonly any[]`?
+
+* 元组仅仅是长度固定的数组 `as const`
+  * 常量元组，表示其不能新增、删除、修改元素
+* 内部元素的类型也是固定不能修改的 `readonly`。
 
 ### First(数组第一个元素)
 
 <link-and-solution num="14" />
 
-
 #### 用法
+
 `First<T>`用来返回数组的第一个元素，用法如下：
 
 ```ts
@@ -437,16 +451,29 @@ type First<T extends any[]> = T extends [infer R, ...infer L] ? R : never
 ```
 
 代码详解：
+
 * `T extends []`：用来判断`T`是否是一个空数组。
 * `T[0]`：根据下标取数组第一个元素。
 * `infer R`： 表示数组第一个元素的占位。
 * `...infer L`: 表示数组剩余元素的占位。
+
+TODO: 数组的 extends 除了 `extends []` 还有其他用法吗？
+
+
+```ts
+T extends []
+
+T extends any[]
+
+extends Array ?
+```
 
 ### Length(元组的长度)
 
 <link-and-solution num="18" />
 
 #### 用法
+
 `Length<T>`用来获取一个数组(包括类数组)的长度，用法如下：
 
 ```ts
@@ -454,17 +481,16 @@ type First<T extends any[]> = T extends [infer R, ...infer L] ? R : never
 type result1 = Length<[1, 2, 3]>
 // 结果：10
 type result2 = Length<{ 5: '5', length: 10 }>
-
 ```
 
 #### 实现方式
 
 ```ts
 type Length<T extends any> = T extends { length: number; } ? T['length'] : never
-
 ```
 
 代码详解：
+
 * `T extends { length: number; }`：判断`T`是否是`{ length: number; }`的子类型，如果是则代表`T`为数组或者类数组。
 * `T['length']`：取`T`对象的`length`属性的值(注意，在`TypeScript`中不能使用`T.length`来取值，而应该使用`T['length']`)。
 
@@ -473,19 +499,18 @@ type Length<T extends any> = T extends { length: number; } ? T['length'] : never
 <link-and-solution num="43" />
 
 #### 用法
+
 `Exclude`是排除的意思，它从`T`类型中排除属于`U`类型的子集，可以理解成取`T`对于`U`的差集，用法如下：
 
 ```ts
 // 结果：'name'|'age'
 type ExcludeResult = Exclude<'name'|'age'|'sex', 'sex'|'address'>
-
 ```
 
 #### 实现方式
 
 ```ts
 type MyExclude<T, U> = T extends U ? never : T
-
 ```
 
 * `T extends U`：这段代码会从`T`的子类型开始分发，例如：
@@ -499,28 +524,30 @@ T extends U
   'sex' extends 'sex'|'address' ? never : 'sex'
 )
 => 'name'|'age'
-
 ```
 
+可用于实现 Omit
+
+TODO: 这里的分发和 in 的遍历，有类似的效果，具体什么区别，是否有什么场景可交换使用？
 
 ### PromiseType(promise包裹类型)
 
 <link-and-solution num="189" />
 
 #### 用法
+
 `PromiseType`是用来获取`Promise`包裹类型的，例如：
 
 ```ts
-function getInfo (): Promise<string|number> {
+function getInfo(): Promise<string|number> {
   return Promise.resolve(1)
 }
-// 结果：(） => Promise<string|number>
+// 结果：() => Promise<string|number>
 type funcType = typeof getInfo
 // 结果：Promise<string|number>
 type returnResult = ReturnType<funcType>
 // 结果：string|number
 type PromiseResult = PromiseType<returnResult>
-
 ```
 
 #### 实现方式
@@ -532,17 +559,32 @@ type PromiseType<T> =
       ? PromiseType<R>
       : R
     : never
-
 ```
 
 代码详解：
+
 * `T extends Promise<infer R>`：判断`T`是否是`Promise<infer R>`的子类型，也就是说`T`必须满足`Promise<any>`的形式。
+
+这里只是取 Promise 定义的返回值类型。
+
+TIP: 但没做错误检测，比如 getInfo 实际返回改为  `return Promise.resolve({})`（定义错了）
+
+```ts
+// 这里改为不定义返回值，就可以自动推断出准确的返回值类型了
+function getInfo2() {
+  return Promise.resolve({})
+}
+type funcType = typeof getInfo
+type returnResult2 = ReturnType<funcType>
+type PromiseResult = PromiseType<returnResult2>
+```
 
 ### If(判断)
 
 <link-and-solution num="268" />
 
 #### 用法
+
 `If<C, T, F>`用来表示根据`C`的值来返回`T`或者`F`，如果`C`为`true`，则返回`T`；如果`C`为`false`，则返回`F`，例如：
 
 ```ts
@@ -586,6 +628,7 @@ type Concat<T extends any[], U extends any[]> = [...T, ...U]
 ```
 
 代码详解：
+
 * `T extends any[]`：用来限制`T`是一个数组，如果传递非数组会报错，`U`也是一样的道理。
 * `[...T, ...U]`：可以理解成`JavaScript`的扩展运算符`...`。
 
@@ -593,8 +636,8 @@ type Concat<T extends any[], U extends any[]> = [...T, ...U]
 
 <link-and-solution num="898" />
 
-
 #### 用法
+
 `Includes<T, U>`用来判断`U`是否在数组`T`中，类似实现数组的`includes`方法，用法如下：
 
 ```ts
@@ -625,39 +668,37 @@ type MyIncludes<T extends readonly any[], U> =
 ```
 
 代码详解：
+
 * `T[number]`：它返回数组中所有数字类型键对应的值，将这些值构造成一个联合类型，例如：`1 | 2 | 3`。
 * `U extends T[number]`：判断`U`是否是某个联合类型的子类型，例如：`1 extends 1 | 2 | 3`。
 * `Equal`：是用来判断两个值是否相等的辅助方法。
 
+TODO: Equal 实现怎么解释？
+
 ### Push(数组push方法)
 
 <link-and-solution num="3057" />
-
 
 #### 用法
 
 ```ts
 // 结果：[1, 2, 3, 4]
 type result = Push<[1, 2, 3], 4>
-
 ```
-
 
 #### 实现方式
 
 ```ts
 // Push实现
 type Push<T extends any[], K> = [...T, K]
-
 ```
-
 
 ### Unshift(数组unshift方法)
 
 <link-and-solution num="3060" />
 
-
 与`pop`和`push`方法相似的另外一对方法叫`shift`和`unshift`，它们的实现思路是一样的。
+
 #### 用法
 
 ```ts
@@ -699,10 +740,13 @@ type MyParameters<T extends (...args: any[]) => any> = T extends (...args: infer
 
 
 ### 内置Partial(可填)和内置Required(必填)
+
 ::: tip
 此题不属于type-challenges类型挑战题
 :::
+
 #### 用法
+
 `Partial`和`Required`一个是让所有属性可填、另外一个是让所有属性必填，用法如下：
 
 ```ts
@@ -728,16 +772,16 @@ type MyPartial<T> = {
 type MyRequired<T> = {
   [P in keyof T]-?: T[P]
 }
-
 ```
 
-
-
 ### 内置Record(构造)
+
 ::: tip
 此题不属于type-challenges类型挑战题
 :::
+
 #### 用法
+
 `Record<K, T>`用来将`K`的每一个键(`k`)指定为`T`类型，这样由多个`k/T`组合成了一个新的类型，用法如下：
 
 ```ts
@@ -759,7 +803,6 @@ type Expected = {
 
 // 结果：Expected
 type RecordResult = Record<keys, Animal>
-
 ```
 
 #### 实现方式
@@ -768,31 +811,34 @@ type RecordResult = Record<keys, Animal>
 type MyRecord<K extends keyof any, T> = {
   [P in K]: T
 }
-
 ```
 
 代码详解：
+
 * `K extends keyof any`：此代码表示`K`是`keyof any`任意类型其所有键的子类型，例如：
 
 ```ts
 // K为 'Dog'|'cat'
 type UnionKeys = 'Dog' | 'Cat'
 
-// K为'name'|'age'
+// K 为 'name'|'age'
 type Person = {
   name: string;
   age: number;
 }
 type TypeKeys = keyof Person
-
 ```
 
+TODO: 类似构造了对象定义，那如果是 Map 呢，怎么约束 map 的 ts 类型？
 
 ### 内置Extract(交集)
+
 ::: tip
 此题不属于type-challenges类型挑战题
 :::
+
 #### 用法
+
 `Extract<T, U>`用来取联合类型`T`和`U`的交集，用法如下：
 
 ```ts
@@ -804,7 +850,15 @@ type Person = {
 
 // 结果：'age'|'address'
 type ExtractResult = Extract<keyof Person, 'age'|'address'|'sex'>
+```
 
+对比 Exclude 实现
+
+```ts
+type MyExclude<T, U> = T extends U ? never : T
+
+// 结果：'name'|'age'
+type result = MyExclude<'name'|'age'|'sex', 'sex'|'address'>
 ```
 
 #### 实现方式
@@ -815,6 +869,7 @@ type MyExtract<T, U> = T extends U ? T : never
 ```
 
 代码详解：
+
 * `T extends U`：此代码会自动将`T`的子类型进行分发，例如：
 
 ```js
@@ -830,29 +885,11 @@ T extends U
 ```
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 ## 中级
 
 ### 内置ReturnType(函数返回类型)
 
 <link-and-solution num="2" />
-
 
 #### 用法
 `ReturnType<T>`是用来获取一个函数的返回类型的，例如：
@@ -869,8 +906,7 @@ type result = ReturnType<typeof getRandom>
 #### 实现方式
 
 ```ts
-type ReturnType<T> = T extends (...args: any) => infer R ? R : never
-
+type ReturnType<T extends (...args: any) => any> = T extends (...args: any) => infer R ? R : any;
 ```
 
 代码详解：
@@ -893,29 +929,28 @@ type Person = {
 
 // 结果：{ name？: string; age: number; }
 type OmitResult = Omit<Person, 'address'>
-
 ```
 
 #### 实现方式
+
 `Omit`可以借助在上面已经实现过的`Pick`和`Exclude`配合来实现，如下：
 
 ```ts
 // Omit实现
 type MyOmit<T, K> = MyPick<T, MyExclude<keyof T, K>>
-
 ```
 
 代码详解：
+
 * 使用`MyExclude<keyof T, K>`，可以从`T`中移除指定的字段，移除后得到一个新的联合类型：`'name'|'age'`
 * 使用`MyPick<T, 'name'|'age'>`，可以从`T`中选取这两个字段，组合成一个新的类型。
-
 
 ### Readonly(按需Readonly)
 
 <link-and-solution num="8" />
 
-
 #### 用法
+
 不同于初级实现中的`Readonly`，在中级实现的`Readonly`中，如果我们传递了指定的字段，那么`Readonly`会表现为按需实现`readonly`，用法如下。
 
 ```ts
@@ -949,7 +984,6 @@ const obj: ReadonlyResult2 = {
 obj.title = 'aaa'
 obj.desc = '32' // error
 obj.completed = false // error
-
 ```
 
 #### 实现方式
@@ -963,10 +997,10 @@ type Readonly<T, K extends keyof T = keyof T> = T & {
 type Readonly<T, K extends keyof T = keyof T> = Omit<T, K> & {
   readonly [P in K]: T[P]
 }
-
 ```
 
 代码详解：
+
 * `K extends keyof T = keyof T`：如要传递了`K`，那么只能是`T`中已经存在的属性，不存在则报错；如果不传递，则默认值为`keyof T`，意味着全部属性都添加`readonly`。
 * `T & U`：在本例中表示将`T`和`U`中的字段结合起来，如果没有`&`会丢失一些属性，例如`title`。
 
@@ -974,8 +1008,8 @@ type Readonly<T, K extends keyof T = keyof T> = Omit<T, K> & {
 
 <link-and-solution num="9" />
 
-
 #### 用法
+
 `DeepReadonly`用来将一个嵌套对象类型中所有字段全部添加`readonly`关键词，例如：
 
 ```ts
@@ -1006,24 +1040,27 @@ type Y = {
 type DeepReadonly<T> = {
   readonly [P in keyof T]: T[P] extends { [key: string]: any } ? DeepReadonly<T[P]> : T[P]
 }
-
 ```
 
 代码详解：
+
 * `T[P] extends { [key: string]: any }`：这段表示`T[P]`是否是一个包含索引签名的字段，如果包含我们认为它是一个嵌套对象，就可以递归调用`DeepReadonly`。
+
+TODO: 这里使用 `[key: string]` 规范吗？
+
+为什么不使用 `[K in keyof any]`
 
 ### TupleToUnion(元组转联合类型)
 
 <link-and-solution num="10" />
 
-
 #### 用法
+
 `TupleToUnion`是用来将一个元组转换成联合类型的，其用法如下：
 
 ```ts
 // 结果：'1' | '2' | '3'
 type result = TupleToUnion<['1', '2', '3']>
-
 ```
 
 #### 实现方式
@@ -1040,6 +1077,7 @@ type TupleToUnion<T extends readonly any[]> =
 ```
 
 代码详解：
+
 * `T[number]`：它会自动迭代元组的数字型索引，然后将所有元素组合成一个联合类型。
 * `R | TupleToUnion<args>`：`R`表示每一次迭代中的第一个元素，它的迭代过程可以用下面伪代码表示：
 
@@ -1058,16 +1096,14 @@ const result = '1' | '2' | TupleToUnion<args>
 const R = '3'
 const args = ['']
 const result = '1' | '2' | '3'
-
 ```
-
 
 ### Chainable(可串联构造器)
 
 <link-and-solution num="12" />
 
-
 #### 用法
+
 `Chainable`是用来让一个对象可以进行链式调用的，用法如下：
 
 ```ts
@@ -1085,7 +1121,6 @@ const result = obj
   .options('bar', { value: 'Hello' })
   .options('name', 'TypeScript')
   .get()
-
 ```
 
 #### 实现方式
@@ -1095,29 +1130,31 @@ type Chainable<T> = {
   options<K extends string, V>(key: K, value: V): Chainable<T & {[k in K]: V}>
   get(): T
 }
-
 ```
 
 代码详解：
+
 * `{[k in K]: V}`：每次调用`options`时，把`key/value`构造成一个对象，例如：`{ foo: 123 }`。
 * `T & U`：此处使用到`&`关键词，用来合并`T`和`U`两个对象中的所有`key`。
 * `Chainable<>`：递归调用`Chainable`，赋予新对象以链式调用的能力。
+
+TODO: 这里还要熟悉下函数的参数类型定义 `<K extends string, V>(key: K, value: V)`
 
 ### Last(数组最后一个元素)
 
 <link-and-solution num="15" />
 
-
 #### 用法
+
 `Last`是用来获取数组中最后一个元素的，它和我们之前已经实现的`First`思路很相似。
 
 ```ts
 // 结果：3
 type result = Last<[1, 2, 3]>
-
 ```
 
 #### 实现方式
+
 `Last`的实现方式很巧妙，因为它既可以在索引上做文章来实现，也可以用占位的思想来实现。
 
 ```ts
@@ -1125,10 +1162,10 @@ type result = Last<[1, 2, 3]>
 type Last<T extends any[]> = [any, ...T][T['length']]
 // way2: 后占位思想
 type Last<T extends any[]> = T extends [...infer R, infer L] ? L : never
-
 ```
 
 代码详解：
+
 * `[any, ...T]`：此代码表示我们构建了一个新数组，并添加了一个新元素到第一个位置，然后把原数组`T`中的元素依次扩展到新数组中，可以用以下伪代码表示：
 
 ```ts
@@ -1138,7 +1175,6 @@ const T = [1, 2, 3]
 const arr = [any, 1, 2, 3]
 // 结果: 3
 const result = arr[T['length']]
-
 ```
 
 * `T['length']`：这里我们获取到的是原始`T`数组的长度，例如`[1, 2, 3]`，长度值为`3`。而在新数组中，索引为`3`的位置正好是最后一个元素的索引，通过这种方式就能达到我们的目的。
@@ -1148,8 +1184,8 @@ const result = arr[T['length']]
 
 <link-and-solution num="16" />
 
-
 继续沿用以上处理索引思想或占位的思想，我们能快速实现数组`pop`方法。
+
 #### 用法
 
 ```ts
@@ -1157,7 +1193,6 @@ const result = arr[T['length']]
 type result1 = Pop<[1, 2, 3]>
 // 结果2：[]
 type result2 = Pop<[]>
-
 ```
 
 #### 实现方式
@@ -1170,16 +1205,14 @@ type Pop<T extends any[]> =
     : T extends [...infer Rest, infer L]
       ? Rest
       : never
-
 ```
-
 
 ### PromiseAll返回类型
 
 <link-and-solution num="20" />
 
-
 #### 用法
+
 `PromiseAll`是用来取`Promise.all()`函数所有返回的类型，其用法如下
 
 ```ts
@@ -1196,22 +1229,22 @@ type t2 = typeof result2
 type t3 = typeof result3
 // 结果4： Promise<number[]>
 type t4 = typeof result4
-
 ```
 
 #### 实现方式
+
 与之前的例子不同，`PromiseAll`我们声明的是一个`function`而不是`type`。
 
 ```ts
-// Awaited为内置类型
+// Awaited 为内置类型
 type PromiseAllType<T> = Promise<{
   [P in keyof T]: Awaited<T[P]>
 }>
 declare function PromiseAll<T extends any[]>(values: readonly [...T]): PromiseAllType<T>
-
 ```
 
 代码详解：
+
 * 因为`Promise.all()`函数接受的是一个数组，因此泛型`T`限制为一个`any[]`类型的数组。
 * `PromiseAllType`的实现思路有点像之前的`PromiseType`，只不过这里多了一层`Promise`的包裹，因为`Promise.all()`的返回类型也是一个`Promise`。
 

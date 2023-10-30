@@ -67,6 +67,8 @@ let big: bigint = 100n;
 let sym: symbol = Symbol("me");
 ```
 
+- https://www.typescriptlang.org/zh/play
+
 ### Boolean 类型
 
 ### Number 类型
