@@ -145,6 +145,32 @@ unknown与any的最大区别是：
     let strLength: number = (str as string).length;
     ```
 
+    有时为什么需要两次 as 断言
+
+    `expr as T`
+
+    expr 是实际的值，T是类型断言，它们必须满足下面的条件：expr是T的子类型，或者T是expr的子类型。
+
+    也就是说，类型断言要求实际的类型与断言的类型兼容，实际类型可以断言为一个更加宽泛的类型（父类型），也可以断言为一个更加精确的类型（子类型），但不能断言为一个完全无关的类型。
+
+    但是，如果真的要断言成一个完全无关的类型，也是可以做到的。那就是连续进行两次类型断言，先断言成 unknown 类型或 any 类型，然后再断言为目标类型。因为any类型和unknown类型是所有其他类型的父类型，所以可以作为两种完全无关的类型的中介。
+
+    ```ts
+    // 或者写成 <T><unknown>expr
+    expr as unknown as T
+    ```
+
+    上面代码中，expr连续进行了两次类型断言，第一次断言为unknown类型，第二次断言为T类型。这样的话，expr就可以断言成任意类型T，而不报错。
+
+    下面是本小节开头那个例子的改写。
+
+    ```ts
+    const n = 1;
+    const m:string = n as unknown as string; // 正确
+    ```
+
+    上面示例中，通过两次类型断言，变量n的类型就从数值，变成了完全无关的字符串，从而赋值时不会报错。
+
 ### 非空断言
 
 在上下文中当类型检查器无法断定类型时，可以使用缀表达式操作符 ! 进行断言操作对象是非 null 和非 undefined 的类型，**即x!的值不会为 null 或 undefined**
@@ -164,7 +190,7 @@ console.log(value); // Variable 'value' is used before being assigned.
 
 我们定义了变量, 没有赋值就使用，则会报错
 
-通过 let x!: number; 确定赋值断言，TypeScript 编译器就会知道该属性会被明确地赋值。
+通过 `let x!: number;` 确定赋值断言，TypeScript 编译器就会知道该属性会被明确地赋值。
 
 ```ts
 let value!:number

@@ -1,6 +1,6 @@
 # 基于 TypeScript 的 JSDoc 注释
 
-JSDoc使用TS声明文件提供智能提示
+JSDoc 使用 TS 声明文件提供智能提示
 
 ## 用法
 

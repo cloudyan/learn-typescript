@@ -92,8 +92,10 @@ export type UserProps = {
 ## 参考文档
 
 - https://github.com/TypeStrong/learn-typescript
-- https://github.com/type-challenges/type-challenges
-  - https://wangtunan.github.io/blog/typescript/challenge.html
+- https://wangtunan.github.io/blog/typescript/base.html
+- [Type-Challenges](https://wangtunan.github.io/blog/typescript/challenge.html)
+  - https://github.com/type-challenges/type-challenges
+- [深入理解 TypeScript](https://jkchao.github.io/typescript-book-chinese/)
 
 ### 其他文档
 
