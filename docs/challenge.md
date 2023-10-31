@@ -1231,6 +1231,11 @@ type t3 = typeof result3
 type t4 = typeof result4
 ```
 
+TODO:
+
+1. t3 和 t2 怎么不一样？什么区别？
+2. t4 为什么不是 `Promise<[1, 2, 3]>`
+
 #### 实现方式
 
 与之前的例子不同，`PromiseAll`我们声明的是一个`function`而不是`type`。
@@ -1248,13 +1253,12 @@ declare function PromiseAll<T extends any[]>(values: readonly [...T]): PromiseAl
 * 因为`Promise.all()`函数接受的是一个数组，因此泛型`T`限制为一个`any[]`类型的数组。
 * `PromiseAllType`的实现思路有点像之前的`PromiseType`，只不过这里多了一层`Promise`的包裹，因为`Promise.all()`的返回类型也是一个`Promise`。
 
-
 ### LookUp(查找)
 
 <link-and-solution num="62" />
 
-
 #### 用法
+
 `LookUp`是用来根据类型值查`type`找类型的，其用法如下：
 
 ```ts
@@ -1270,7 +1274,6 @@ interface Dog {
 
 // 结果：Dog
 type result = LookUp<Cat | Dog, 'dog'>
-
 ```
 
 #### 实现方式
@@ -1284,10 +1287,12 @@ type LookUp<
 ```
 
 代码详解：
+
 * `U extends { type: string; }`：这段代码限制`U`的类型必须是具有属性为`type`的对象。
 * `U extends { type: T }`：如果把`T`的值实际带入，为`U extends { type: 'dog' }`，表示判断`U`中的`type`值是不是`dog`，是则返回`U`。
 
 ### Trim、TrimLeft以及TrimRight
+
 TrimLeft：
 <link-and-solution num="106" />
 
@@ -1299,13 +1304,13 @@ Trim：
 
 
 #### 用法
+
 `Trim`、`TrimLeft`以及`TrimRight`这几个工具比较好理解，它们都是用来移除字符串中的空白符的。
 
 ```ts
 type t1 = TrimLeft<' str'>  // 'str'
 type t2 = Trim<' str '>     // 'str'
 type t3 = TrimRight<'str '> // 'str'
-
 ```
 
 #### 实现方式
@@ -1315,10 +1320,10 @@ type Space = ' ' | '\n' | '\t'
 type TrimLeft<S extends string> = S extends `${Space}${infer R}` ? TrimLeft<R> : S
 type Trim<S extends string> = S extends (`${Space}${infer R}` | `${infer R}${Space}`) ? Trim<R> : S
 type TrimRight<S extends string> = S extends `${infer R}${Space}` ? TrimRight<R> : S
-
 ```
 
 代码详解：
+
 * `TrimLeft`和`TrimRight`的实现思路是相同的，区别在于空白符的占位出现在左侧还是右侧。
 * `Trim`的实现就是把`TrimLeft`和`TrimRight`所做的事情结合起来。
 
@@ -1333,7 +1338,6 @@ type TrimRight<S extends string> = S extends `${infer R}${Space}` ? TrimRight<R>
 ```ts
 type t1 = Capitalize<'hello'>   // 'Hello'
 type t2 = UnCapitalize<'Hello'> // 'hello'
-
 ```
 
 #### 实现方式
@@ -1341,10 +1345,10 @@ type t2 = UnCapitalize<'Hello'> // 'hello'
 ```ts
 type Capitalize<S extends string> = S extends `${infer char}${infer L}` ? `${Uppercase<char>}${L}` : S
 type UnCapitalize<S extends string> = S extends `${infer char}${infer L}` ? `${Lowercase<char>}${L}` : S
-
 ```
 
 代码详解：
+
 * 无论是`Capitalize`还是`UnCapitalize`，它们都依赖内置的工具函数`Uppercase`或者`Lowercase`。对于`Capitalize`而言，我们只需要把首字母隔离出来，然后调用`Uppercase`即可。对于`UnCapitalize`而言，我们把首字母调用`Lowercase`即可。
 
 
@@ -1352,8 +1356,8 @@ type UnCapitalize<S extends string> = S extends `${infer char}${infer L}` ? `${L
 
 <link-and-solution num="116" />
 
-
 #### 用法
+
 `Replace`是用来将字符串中第一次出现的某段内容，使用指定的字符串进行替换，而`ReplaceAll`是全部替换，其用法如下：
 
 ```ts
@@ -1361,7 +1365,6 @@ type UnCapitalize<S extends string> = S extends `${infer char}${infer L}` ? `${L
 type t1 = Replace<'foobarbar', 'bar', 'foo'>
 // 结果2： foobarbar
 type t2 = Replace<'foobarbar', '', 'foo'>
-
 ```
 
 #### 实现方式
@@ -1376,7 +1379,6 @@ type Replace<
         ? S
         : `${L}${to}${R}`
       : S
-
 ```
 
 
@@ -1386,6 +1388,7 @@ type Replace<
 
 
 #### 用法
+
 `ReplaceAll`是用来将字符串中指定字符全部替换的，其用法如下：
 
 ```ts
@@ -1406,7 +1409,6 @@ type ReplaceAll<
         ? S
         : `${ReplaceAll<L, from, to>}${to}${ReplaceAll<R, from, to>}`
       : S
-
 ```
 
 
@@ -1414,32 +1416,31 @@ type ReplaceAll<
 
 <link-and-solution num="191" />
 
-
 #### 用法
+
 `AppendArgument`是用来向一个函数追加一个参数的，其用法如下：
 
 ```ts
 //  结果：(a: number, b: number) => number
 type result = AppendArgument<(a: number) => number, number>
-
 ```
 
 #### 实现方式
 
 ```ts
 type AppendArgument<Fn, A> = Fn extends (...args: infer R) => infer T ? (...args: [...R, A]) => T : never
-
 ```
 
 代码详解：
+
 * 我们首先利用`infer`关键词得到了`Fn`函数的参数类型以及返回类型，然后把新的参数添加到参数列表，并原样返回其函数类型。
 
 ### Permutation(排列组合)
 
 <link-and-solution num="296" />
 
-
 #### 用法
+
 `Permutation`是用来将联合类型中的每一个类型进行排列组合，其用法如下：
 
 ```ts
@@ -1447,7 +1448,6 @@ type AppendArgument<Fn, A> = Fn extends (...args: infer R) => infer T ? (...args
 type result1 = Permutation<'A' | 'B'>
 // 结果2：['A', 'B', 'C'] | ['A', 'C', 'B'] | ['B', 'A', 'C'] | ['B', 'C', 'A'] | ['C', 'A', 'B'] | ['C', 'B', 'A']
 type result2 = Permutation<'A' | 'B' | 'C'>
-
 ```
 
 #### 实现方式
@@ -1459,11 +1459,11 @@ type Permutation<T, U = T> =
     : T extends U
       ? [T, ...Permutation<Exclude<U, T>>]
       : never
-
 ```
 
 
 代码详解：
+
 * `[T] extends [never]`：这段代码主要是为了处理联合类型为空的情况。
 * `T extends U`：这段代码主要是需要使用**分布式条件类型**这个知识点，当`T extends U`成立时，在其后的判断语句中，`T`代表当前迭代的类型。
 * `<Exclude<U, T>`：因为此时的`T`代表当前迭代的类型，所以我们从原始联合类型中排除当前类型，然后递归调用`Permutation`。当`T`为`A`时，递归调用`Permutation<'B' | 'C'>`, 此时结果为`['A']` + `['B', 'C']` 或 `['A']` + `['C', 'B']`。
@@ -1472,13 +1472,12 @@ type Permutation<T, U = T> =
 
 <link-and-solution num="298" />
 
-
 #### 用法
+
 `LengthOfString`是用来计算一个字符串长度的，其用法如下：
 
 ```ts
 type result = LengthOfString<'Hello'> // 5
-
 ```
 
 #### 实现方式
@@ -1490,10 +1489,10 @@ type LengthOfString<
 > = S extends `${infer Char}${infer R}`
       ? LengthOfString<R, [...T, Char]>
       : T['length']
-
 ```
 
 代码详解：
+
 * 我们通过一个泛型的辅助数组来帮计算字符串的长度，在第一次符合条件时，将其第一个字符添加到数组中，在后续的递归过程中，如果不符合条件，直接返回`T['length']`，这个过程可以用如下代码表示：
 
 ```ts
@@ -1507,7 +1506,6 @@ const T = ['H','e','l'], S = 'llo', R = 'lo'
 const T = ['H','e','l','l'], S = 'lo', R = 'o'
 // 第五次递归
 const T = ['H','e','l','l', 'o'], S = 'o', R = ''
-
 ```
 
 
@@ -1515,14 +1513,13 @@ const T = ['H','e','l','l', 'o'], S = 'o', R = ''
 
 <link-and-solution num="459" />
 
-
 #### 用法
+
 `Flatten`是用来将多维数组进行降维的，其用法如下：
 
 ```ts
 // 结果：[1, 2, 3]
 type result = Flatten<[1, 2, [3]]>
-
 ```
 
 #### 实现方式
@@ -1535,7 +1532,6 @@ type Flatten<
         ? [...Flatten<L>, ...Flatten<R>]
         : [L, ...Flatten<R>]
       : []
-
 ```
 
 代码详解：`Flatten`数组降维的主要思路是，遍历数组中的每一个元素，判断其是否为一个数组，如果是，则递归调用`Flatten`，进行降维。
@@ -1544,14 +1540,13 @@ type Flatten<
 
 <link-and-solution num="527" />
 
-
 #### 用法
+
 `AppendToObject`是用来向指定对象添加一个额外的属性(`key/value`)，其用法如下：
 
 ```ts
 // 结果：{ id: number; name: string; }
 type result = AppendToObject<{ id: number; }, 'name', string>
-
 ```
 
 #### 实现方式
@@ -1565,6 +1560,7 @@ type AppendToObject<T, K extends basicKeyType, V> = {
 ```
 
 代码详解：
+
 * `basicKeyType`：在`JavaScript`中，因为一个对象的属性只能是`string`、`number`或者`symbol`这三种类型，所以我们限定`K`必须满足此条件。
 * `keyof T | K`：这里表示`keyof T`的联合类型和`K`，组合成一个新的联合类型。
 
@@ -1572,8 +1568,8 @@ type AppendToObject<T, K extends basicKeyType, V> = {
 
 <link-and-solution num="529" />
 
-
 #### 用法
+
 `Absolute`是用来取一个数的绝对值的，其用法如下：
 
 ```ts
@@ -1581,7 +1577,6 @@ type AppendToObject<T, K extends basicKeyType, V> = {
 type result1 = Absolute<-531>
 // 结果2："9999"
 type result2 = Absolute<9_999n>
-
 ```
 
 #### 实现方式
@@ -1589,10 +1584,10 @@ type result2 = Absolute<9_999n>
 ```ts
 type NumberLike = number | string | bigint
 type Absolute<T extends NumberLike> =  `${T}` extends `-${infer N}` ? N : `${T}`
-
 ```
 
 代码详解：
+
 * `NumberLike`：我们认为`'1'`和`1`都是一个合法的数字，所以定义一个辅助的`NumberList`联合类型。
 * `${T}` extends `-${infer N}`：这里判断我们传递的数字是否为负数，如果是则直接取其正数部分，否则直接返回。
 
@@ -1606,21 +1601,22 @@ type MakeArray<N extends string, T extends any[] = []> =
 
 // 结果：3
 type result = MakeArray<'3'>['length']
-
 ```
 
 
 ### StringToArray(字符串转数组)
+
 ::: tip
 此题不属于type-challenges类型挑战题
 :::
+
 #### 用法
+
 `StringToArray`是用来将一个字符串转换成一个数组的，其用法如下：
 
 ```ts
 // 结果：['h', 'e', 'l', 'l', 'o']
 type result = StringToArray<'hello'>
-
 ```
 
 #### 实现方式
@@ -1632,7 +1628,6 @@ type StringToArray<
 > = S extends `${infer Char}${infer R}`
       ? StringToArray<R, [...U, Char]>
       : U
-
 ```
 
 代码详解：`StringToArray`的实现主要是使用了递归的思想，它每次拿到字符串中一个字符，然后存入一个辅助数组中，当字符串为空时，直接返回这个辅助数组。
@@ -1641,14 +1636,13 @@ type StringToArray<
 
 <link-and-solution num="531" />
 
-
 #### 用法
+
 在实现`StringToArray`后，我们能够很容易实现`StringToUnion`，其用法如下：
 
 ```ts
 // 结果：'h' | 'e' | 'l' | 'l' | 'o'
 type result = StringToUnion<'hello'>
-
 ```
 
 #### 实现方式
@@ -1662,7 +1656,6 @@ type StringToUnion<
       : never
 // way2: 借用StringToArray
 type StringToUnion<S extends string> = StringToArray<S>[number]
-
 ```
 
 代码详解：`StringToArray<S>`返回的是一个数组，`T[number]`表示对一个数组进行数字类型索引迭代，其迭代结果是每个元素组合成的一个联合类型。
@@ -1671,8 +1664,8 @@ type StringToUnion<S extends string> = StringToArray<S>[number]
 
 <link-and-solution num="599" />
 
-
 #### 用法
+
 `Merge`是用来合并两个类型，如果有重复的字段类型，则第二个的字段类型覆盖第一个的，其用法如下：
 
 ```ts
@@ -1687,7 +1680,6 @@ type Bar = {
 
 // 结果：{ a: number; b: number; c: boolean; }
 type result = Merge<Foo, Bar>
-
 ```
 
 #### 实现方式
@@ -1696,26 +1688,24 @@ type result = Merge<Foo, Bar>
 type Merge<F, S> = {
   [P in keyof F | keyof S]: P extends keyof S ? S[P] : P extends keyof F ? F[P] : never
 }
-
 ```
 
 代码详解：
-* `keyof F | keyof S`：这段代码的含义是将`F`和`S`这两个对象的键组合成一个新的联合类型。
-* `P extends`：这里进行了两次`extends`判断，其中第二次不能直接写成`F[P]`，而应该多判断一次，当满足条件时才使用`F[P]`，这是因为`P`的类型判断无法作用于`:`符号后面。
 
+- `keyof F | keyof S`：这段代码的含义是将`F`和`S`这两个对象的键组合成一个新的联合类型。
+- `P extends`：这里进行了两次`extends`判断，其中第二次不能直接写成`F[P]`，而应该多判断一次，当满足条件时才使用`F[P]`，这是因为 **`P`的类型判断无法作用于`:`符号后面**。
 
 ### KebabCase(字符串转连字符)
 
 <link-and-solution num="612" />
 
-
 #### 用法
+
 `KebabCase`是用来将驼峰形式字符串，转成连字符形式字符串的，其用法如下：
 
 ```ts
 // 结果：foo-bar-baz
 type result = KebabCase<'FooBarBaz'>
-
 ```
 
 #### 实现方式
@@ -1728,16 +1718,16 @@ type KebabCase<
         ? `${Uncapitalize<S1>}${KebabCase<S2>}`
         : `${Uncapitalize<S1>}-${KebabCase<S2>}`
       : S
-
 ```
 
+TODO: 这是怎么分发的？
 
 ### Diff(类型差异部分)
 
 <link-and-solution num="645" />
 
-
 #### 用法
+
 `Diff`是用来获取两个类型的不同部分的，其用法如下：
 
 ```ts
@@ -1778,8 +1768,8 @@ type Diff<T, U> = {
 
 <link-and-solution num="949" />
 
-
 #### 用法
+
 `AnyOf`用来判断数组元素真假值的，如果任一值为真，返回`true`；数组为空或者全部为`false`，才返回`false`，其用法如下：
 
 ```ts
@@ -1806,6 +1796,7 @@ type AnyOf<T extends readonly any[]> = T[number] extends FalsyType ? false : tru
 
 
 #### 用法
+
 `IsNever`是用来判断是否为`never`类型，其用法如下：
 
 ```ts
@@ -1839,8 +1830,8 @@ type IsNever<T> = Equal<T, never>
 
 <link-and-solution num="1097" />
 
-
 #### 用法
+
 `IsUnion`是用来判断一个类型是否为联合类型的，其用法如下：
 
 ```ts
@@ -1850,7 +1841,6 @@ type result1 = IsUnion<string|number|boolean>
 type result2 = IsUnion<string>
 // 结果3：false
 type result2 = IsUnion<never>
-
 ```
 
 #### 实现方式
@@ -1865,6 +1855,7 @@ type IsUnion<T, U = T> =
         ? false
         : true
       : false
+
 // way2: 正反对比法
 type IsUnion<T, U = T> =
   (T extends U
@@ -1873,7 +1864,6 @@ type IsUnion<T, U = T> =
       : unknown
     : false
   ) extends true ? false : true
-
 ```
 
 代码详解：上面的实现虽然代码不多，但可能无法一下子就弄明白，为了更好的理解这种实现方式，我们来看如下两个案例分析：
