@@ -3,7 +3,7 @@
 
 
 // 定义泛型 @template
-// 这是JSDoc文档中没有提及的一种定义类型，只在[google closure compiler](https://github.com/google/closure-compiler/wiki/Generic-Types)中有提及，但是VS Code中有对应的支持：
+// 这是 JSDoc 文档中没有提及的一种定义类型，只在 [google closure compiler](https://github.com/google/closure-compiler/wiki/Generic-Types) 中有提及，但是 VS Code 中有对应的支持：
 
 /**
  * @param {T} x
@@ -36,7 +36,7 @@ function pluck(obj, ...params) {
 
 // 定义扩展泛型基类 @extends, @augments
 // 参看官方文档的示例吧
-// extends允许您在从基本 JavaScript 类扩展时指定通用参数
+// extends 允许您在从基本 JavaScript 类扩展时指定通用参数
 /**
  * @template T
  * @extends {Set<T>}
@@ -46,7 +46,7 @@ class SortableSet extends Set {
 }
 
 
-// @augments可以使泛型参数更具体
+// @augments 可以使泛型参数更具体
 /**
  * @augments {Set<string>}
  */

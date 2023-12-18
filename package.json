@@ -25,6 +25,7 @@
     "autocorrect-node": "^2.9.0",
     "husky": "^8.0.3",
     "lint-staged": "^15.2.0",
+    "only-allow": "^1.2.1",
     "typescript": "^5.2.2"
   },
   "dependencies": {

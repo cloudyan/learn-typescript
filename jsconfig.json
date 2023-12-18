@@ -2,8 +2,8 @@
 
 // npx -p typescript tsc jsdoc/examples/**.js --declaration --target es2015 --allowJs --emitDeclarationOnly --outDir dist/types
 {
-  // ts报错 Cannot find name 'Set'
-  // 当命令行上指定了输入文件时，tsconfig.json文件会被忽略。可以在tsconfig.json的files中配置待编译，此时直接命令行tsc就可以读了
+  // ts 报错 Cannot find name 'Set'
+  // 当命令行上指定了输入文件时，tsconfig.json 文件会被忽略。可以在 tsconfig.json 的 files 中配置待编译，此时直接命令行 tsc 就可以读了
   // 配置 files 没生效，通过命令行指定 target 生效了
   // "files": [
   //   "./jsdoc/**/*.js"

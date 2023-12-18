@@ -87,14 +87,14 @@ let sym: symbol = Symbol("me");
 
 ### void 类型
 
-void 意思就是无效的, 一般只用在函数上，告诉别人这个函数没有返回值。
+void 意思就是无效的，一般只用在函数上，告诉别人这个函数没有返回值。
 
 > 默认情况下 null 和 undefined 是所有类型的子类型。也就是说你可以把 null 和 undefined 赋值给其他类型。
-> 如果你在tsconfig.json指定了 `"strictNullChecks":true`, 即开启严格模式后，null 和 undefined 只能赋值给 void 和它们各自的类型。
+> 如果你在 tsconfig.json 指定了 `"strictNullChecks":true`, 即开启严格模式后，null 和 undefined 只能赋值给 void 和它们各自的类型。
 
 ### never 类型
 
-never 类型表示的是那些永不存在的值的类型。例如never 类型是那些总是会抛出异常或根本就不会有返回值的函数表达式或箭头函数表达式的返回值类型
+never 类型表示的是那些永不存在的值的类型。例如 never 类型是那些总是会抛出异常或根本就不会有返回值的函数表达式或箭头函数表达式的返回值类型
 
 值会永不存在的[两种情况](./src/typesystem/never.ts)：
 
@@ -103,11 +103,11 @@ never 类型表示的是那些永不存在的值的类型。例如never 类型�
 
 ### Unknown 类型
 
-unknown与any一样，所有类型都可以分配给unknown:
+unknown 与 any 一样，所有类型都可以分配给 unknown:
 
-unknown与any的最大区别是：
+unknown 与 any 的最大区别是：
 
-任何类型的值可以赋值给any，同时any类型的值也可以赋值给任何类型。unknown 任何类型的值都可以赋值给它，但它只能赋值给unknown和any
+任何类型的值可以赋值给 any，同时 any 类型的值也可以赋值给任何类型。unknown 任何类型的值都可以赋值给它，但它只能赋值给 unknown 和 any
 
 ### 对象类型
 
@@ -129,7 +129,7 @@ unknown与any的最大区别是：
 
 ### 类型断言
 
-某些情况下，我们可能比typescript更加清楚的知道某个变量的类型，所以我们可能希望手动指定一个值的类型
+某些情况下，我们可能比 typescript 更加清楚的知道某个变量的类型，所以我们可能希望手动指定一个值的类型
 
 类型断言有两种形式
 
@@ -151,18 +151,18 @@ unknown与any的最大区别是：
 
     `expr as T`
 
-    expr 是实际的值，T是类型断言，它们必须满足下面的条件：expr是T的子类型，或者T是expr的子类型。
+    expr 是实际的值，T 是类型断言，它们必须满足下面的条件：expr 是 T 的子类型，或者 T 是 expr 的子类型。
 
     也就是说，类型断言要求实际的类型与断言的类型兼容，实际类型可以断言为一个更加宽泛的类型（父类型），也可以断言为一个更加精确的类型（子类型），但不能断言为一个完全无关的类型。
 
-    但是，如果真的要断言成一个完全无关的类型，也是可以做到的。那就是连续进行两次类型断言，先断言成 unknown 类型或 any 类型，然后再断言为目标类型。因为any类型和unknown类型是所有其他类型的父类型，所以可以作为两种完全无关的类型的中介。
+    但是，如果真的要断言成一个完全无关的类型，也是可以做到的。那就是连续进行两次类型断言，先断言成 unknown 类型或 any 类型，然后再断言为目标类型。因为 any 类型和 unknown 类型是所有其他类型的父类型，所以可以作为两种完全无关的类型的中介。
 
     ```ts
     // 或者写成 <T><unknown>expr
     expr as unknown as T
     ```
 
-    上面代码中，expr连续进行了两次类型断言，第一次断言为unknown类型，第二次断言为T类型。这样的话，expr就可以断言成任意类型T，而不报错。
+    上面代码中，expr 连续进行了两次类型断言，第一次断言为 unknown 类型，第二次断言为 T 类型。这样的话，expr 就可以断言成任意类型 T，而不报错。
 
     下面是本小节开头那个例子的改写。
 
@@ -171,11 +171,11 @@ unknown与any的最大区别是：
     const m:string = n as unknown as string; // 正确
     ```
 
-    上面示例中，通过两次类型断言，变量n的类型就从数值，变成了完全无关的字符串，从而赋值时不会报错。
+    上面示例中，通过两次类型断言，变量 n 的类型就从数值，变成了完全无关的字符串，从而赋值时不会报错。
 
 ### 非空断言
 
-在上下文中当类型检查器无法断定类型时，可以使用缀表达式操作符 ! 进行断言操作对象是非 null 和非 undefined 的类型，**即x!的值不会为 null 或 undefined**
+在上下文中当类型检查器无法断定类型时，可以使用缀表达式操作符 ! 进行断言操作对象是非 null 和非 undefined 的类型，**即 x! 的值不会为 null 或 undefined**
 
 ```ts
 let user: string | null | undefined;
@@ -190,7 +190,7 @@ let value:number
 console.log(value); // Variable 'value' is used before being assigned.
 ```
 
-我们定义了变量, 没有赋值就使用，则会报错
+我们定义了变量，没有赋值就使用，则会报错
 
 通过 `let x!: number;` 确定赋值断言，TypeScript 编译器就会知道该属性会被明确地赋值。
 
@@ -201,7 +201,7 @@ console.log(value); // undefined 编译正确
 
 ### 联合类型
 
-联合类型用|分隔，表示取值可以为多种类型中的一种
+联合类型用 | 分隔，表示取值可以为多种类型中的一种
 
 ```ts
 let status:string|number
@@ -241,7 +241,7 @@ let person: IpersonA & IpersonB = {
 
 person 既是 IpersonA 类型，又是 IpersonB 类型
 
-> 注意：交叉类型取的多个类型的并集，但是如果key相同但是类型不同，则该key为never类型
+> 注意：交叉类型取的多个类型的并集，但是如果 key 相同但是类型不同，则该 key 为 never 类型
 
 ```ts
 interface IpersonA {
@@ -270,7 +270,7 @@ testAndFn({name: "黄老爷"}) // error TS2322: Type 'string' is not assignable 
 
 ### 内置工具
 
-TypeScript 内置了17个类型工具，可以直接使用。
+TypeScript 内置了 17 个类型工具，可以直接使用。
 
 - `Awaited<Type>`
 - `ConstructorParameters<Type>`

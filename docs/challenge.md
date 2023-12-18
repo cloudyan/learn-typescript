@@ -8,7 +8,7 @@ sidebar: auto
 
 在学习完`TypeScript`一些基础知识后，我们已经可以熟练使用一些基本类型定义了，但对于`TypeScript`的高级用法却依旧无法入门，为了更有趣的学习`TypeScript`高级用法，我们选择[Type-Challenges](https://github.com/type-challenges/type-challenges/blob/master/README.zh-CN.md)类型挑战来作为我们学习的目标。
 
-在`Type-Challenges`中，可以从简单(`easy`)、中等(`medium`)、困难(`hard`)以及地狱(`extreme`)难度，循序渐进的学习`TypeScript`高级技巧。
+在`Type-Challenges`中，可以从简单 (`easy`)、中等 (`medium`)、困难 (`hard`) 以及地狱 (`extreme`) 难度，循序渐进的学习`TypeScript`高级技巧。
 
 如果你需要选择其它的方向来深入学习`TypeScript`高级技巧，这里也有一些推荐的开源项目：
 
@@ -43,10 +43,10 @@ type result = Required<Person>
 
 观察以上结果可以得出结论：`-?`是去掉类型中属性后面的`?`，整个`Required`的实际效果是去掉`T`类型中所有属性键后面的`?`，让所有属性变成必填的。
 
-TODO: `+` 有使用场景吗?
+TODO: `+` 有使用场景吗？
 
 ```ts
-// 省略了+号
+// 省略了 + 号
 type MyPartial<T> = {
   [P in keyof T]?: T[P]
 }
@@ -81,7 +81,7 @@ type all = keyof any
 `in`操作符的右侧通常跟一个联合类型，可以使用`in`来迭代这个联合类型，如下：
 
 ```ts
-// 仅演示使用, K为每次迭代的项
+// 仅演示使用，K 为每次迭代的项
 K in 'name' | 'age' | 'sex'
 K = 'name' // 第一次迭代结果
 K = 'age'  // 第二次迭代结果
@@ -110,10 +110,10 @@ type result = Readonly<Person>
 * `[P in keyof T]`：这段代码表示遍历`T`中的每一个属性键，每次遍历时属性键取名为`P`，这和`JavaScript`中的`for in`非常类似：
 
 ```js
-// ts中的迭代
+// ts 中的迭代
 P in keyof T
 
-// js中的迭代
+// js 中的迭代
 for (let key in obj)
 
 ```
@@ -145,11 +145,11 @@ type t2 = typeof obj
 例如，如果一个函数抛出一个错误，那么这个函数就可以用`never`或者`void`来表示其返回值，如下：
 
 ```ts
-// never更适合用来表示永远没有返回值的函数
+// never 更适合用来表示永远没有返回值的函数
 function handlerError(message: string): never {
   throw new Error(message)
 }
-// void适合用来表示返回值为空的函数
+// void 适合用来表示返回值为空的函数
 function handlerError(message: string): void {
   throw new Error(message)
 }
@@ -229,7 +229,7 @@ result: 'name' | never => 'name'
 
 ```
 
-* 在迭代完成之后，会把每次迭代的结果组合成一个新的联合类型(根据`never`类型的特点，最后的结果会剔除掉`never`)，如下：
+* 在迭代完成之后，会把每次迭代的结果组合成一个新的联合类型 (根据`never`类型的特点，最后的结果会剔除掉`never`)，如下：
 
 ```ts
 type result = 'name' | never => 'name'
@@ -248,7 +248,7 @@ type ReturnType<T> = T extends (...args: any) => infer R ? R : never
 const add = (a: number, b: number): number => {
   return a + b
 }
-// 结果: number
+// 结果：number
 type result = ReturnType<typeof add>
 
 ```
@@ -263,10 +263,10 @@ type result = ReturnType<typeof add>
 `TS`中的`infer`占位更像`JavaScript`中的模板字符串：
 
 ```ts
-// 函数的返回类型使用R占位表示
+// 函数的返回类型使用 R 占位表示
 (...args: any) => info R
 
-// 模板字符串中的值，使用变量name占位表示
+// 模板字符串中的值，使用变量 name 占位表示
 const str = `hello, ${name}`
 ```
 
@@ -293,7 +293,7 @@ type result = T & U
 根据交叉类型的概念，我们可以封装一个合并对象的`merge`函数，如下：
 
 ```ts
-// ts v4.8.4以上版本
+// ts v4.8.4 以上版本
 function merge<T, U, K extends T & U>(to: T, from: U): K {
   for (let key in from) {
     ;(to as unknown as K)[key] = from[key] as any
@@ -303,7 +303,7 @@ function merge<T, U, K extends T & U>(to: T, from: U): K {
 // TIP: 上面两次 as? 为什么
 // 参见 完全无关的类型
 
-// ts v4.8.4以下版本
+// ts v4.8.4 以下版本
 function merge<T, U, K extends T & U>(to: T, from: U): K  {
   for (let key in from) {
     ;(to as K)[key] = from[key] as any
@@ -313,8 +313,8 @@ function merge<T, U, K extends T & U>(to: T, from: U): K  {
 
 const obj1 = { name: 'AAA' }
 const obj2 = { age: 23 }
-// js结果：{ name：'AAA'; age: 23; }
-// ts结果：{ name: string; age: number; }
+// js 结果：{ name：'AAA'; age: 23; }
+// ts 结果：{ name: string; age: number; }
 const result = merge(obj1, obj2)
 ```
 
@@ -334,7 +334,7 @@ type Person = {
   address: string;
   sex: number;
 }
-// 结果: { name: string; address: string; }
+// 结果：{ name: string; address: string; }
 type PickResult = Pick<Person, 'name' | 'address'>
 ```
 
@@ -351,7 +351,7 @@ type MyPick<T, K extends keyof T> = {
 * `K extends keyof T`：表示`K`只能是`keyof T`的子类型，如果我们在使用`Pick`的时候传递了不存在于`T`的字段，会报错：
 
 ```ts
-// 报错：phone无法分配给keyof T
+// 报错：phone 无法分配给 keyof T
 type result = MyPick<Person, 'name' | 'phone'>
 ```
 
@@ -363,7 +363,7 @@ type MyOmit<T, K extends keyof T> = {
 }
 ```
 
-### 内置Readonly(只读)
+### 内置 Readonly(只读)
 
 <link-and-solution num="7" />
 
@@ -454,7 +454,7 @@ type First<T extends any[]> = T extends [infer R, ...infer L] ? R : never
 
 * `T extends []`：用来判断`T`是否是一个空数组。
 * `T[0]`：根据下标取数组第一个元素。
-* `infer R`： 表示数组第一个元素的占位。
+* `infer R`：表示数组第一个元素的占位。
 * `...infer L`: 表示数组剩余元素的占位。
 
 TODO: 数组的 extends 除了 `extends []` 还有其他用法吗？
@@ -474,7 +474,7 @@ extends Array ?
 
 #### 用法
 
-`Length<T>`用来获取一个数组(包括类数组)的长度，用法如下：
+`Length<T>`用来获取一个数组 (包括类数组) 的长度，用法如下：
 
 ```ts
 // 结果：3
@@ -492,9 +492,9 @@ type Length<T extends any> = T extends { length: number; } ? T['length'] : never
 代码详解：
 
 * `T extends { length: number; }`：判断`T`是否是`{ length: number; }`的子类型，如果是则代表`T`为数组或者类数组。
-* `T['length']`：取`T`对象的`length`属性的值(注意，在`TypeScript`中不能使用`T.length`来取值，而应该使用`T['length']`)。
+* `T['length']`：取`T`对象的`length`属性的值 (注意，在`TypeScript`中不能使用`T.length`来取值，而应该使用`T['length']`)。
 
-### 内置Exclude(排除)
+### 内置 Exclude(排除)
 
 <link-and-solution num="43" />
 
@@ -530,7 +530,7 @@ T extends U
 
 TODO: 这里的分发和 in 的遍历，有类似的效果，具体什么区别，是否有什么场景可交换使用？
 
-### PromiseType(promise包裹类型)
+### PromiseType(promise 包裹类型)
 
 <link-and-solution num="189" />
 
@@ -607,7 +607,7 @@ type If<C extends boolean, T, F> = C extends true ? T : F
 * `C extends boolean`：表示`C`为`boolean`类型的子类型，既`C`只能为`true`或者`false`，传递其它值报错。
 * `C extends true`：如果用`JavaScript`来表示的话，相当于`C===true`.
 
-### Concat(数组concat方法)
+### Concat(数组 concat 方法)
 
 <link-and-solution num="533" />
 
@@ -632,7 +632,7 @@ type Concat<T extends any[], U extends any[]> = [...T, ...U]
 * `T extends any[]`：用来限制`T`是一个数组，如果传递非数组会报错，`U`也是一样的道理。
 * `[...T, ...U]`：可以理解成`JavaScript`的扩展运算符`...`。
 
-### Includes(数组includes方法)
+### Includes(数组 includes 方法)
 
 <link-and-solution num="898" />
 
@@ -675,7 +675,7 @@ type MyIncludes<T extends readonly any[], U> =
 
 TODO: Equal 实现怎么解释？
 
-### Push(数组push方法)
+### Push(数组 push 方法)
 
 <link-and-solution num="3057" />
 
@@ -689,11 +689,11 @@ type result = Push<[1, 2, 3], 4>
 #### 实现方式
 
 ```ts
-// Push实现
+// Push 实现
 type Push<T extends any[], K> = [...T, K]
 ```
 
-### Unshift(数组unshift方法)
+### Unshift(数组 unshift 方法)
 
 <link-and-solution num="3060" />
 
@@ -710,13 +710,13 @@ type result = Unshift<[1, 2, 3], 0>
 #### 实现方式
 
 ```ts
-// Unshift实现
+// Unshift 实现
 type Unshift<T extends any[], K> = [K, ...T]
 
 ```
 
 
-### 内置Parameters(函数的参数类型)
+### 内置 Parameters(函数的参数类型)
 
 <link-and-solution num="3312" />
 
@@ -739,10 +739,10 @@ type MyParameters<T extends (...args: any[]) => any> = T extends (...args: infer
 ```
 
 
-### 内置Partial(可填)和内置Required(必填)
+### 内置 Partial(可填) 和内置 Required(必填)
 
 ::: tip
-此题不属于type-challenges类型挑战题
+此题不属于 type-challenges 类型挑战题
 :::
 
 #### 用法
@@ -755,10 +755,10 @@ type Person = {
   age?: number;
 }
 
-// 结果: { name?: string; age?: number; }
+// 结果：{ name?: string; age?: number; }
 type PartialResult = MyPartial<Person>
 
-// 结果: { name: string; age: number; }
+// 结果：{ name: string; age: number; }
 type RequiredResult = MyRequired<Person>
 
 ```
@@ -774,15 +774,15 @@ type MyRequired<T> = {
 }
 ```
 
-### 内置Record(构造)
+### 内置 Record(构造)
 
 ::: tip
-此题不属于type-challenges类型挑战题
+此题不属于 type-challenges 类型挑战题
 :::
 
 #### 用法
 
-`Record<K, T>`用来将`K`的每一个键(`k`)指定为`T`类型，这样由多个`k/T`组合成了一个新的类型，用法如下：
+`Record<K, T>`用来将`K`的每一个键 (`k`) 指定为`T`类型，这样由多个`k/T`组合成了一个新的类型，用法如下：
 
 ```ts
 type keys = 'Cat'|'Dot'
@@ -818,7 +818,7 @@ type MyRecord<K extends keyof any, T> = {
 * `K extends keyof any`：此代码表示`K`是`keyof any`任意类型其所有键的子类型，例如：
 
 ```ts
-// K为 'Dog'|'cat'
+// K 为 'Dog'|'cat'
 type UnionKeys = 'Dog' | 'Cat'
 
 // K 为 'name'|'age'
@@ -831,10 +831,10 @@ type TypeKeys = keyof Person
 
 TODO: 类似构造了对象定义，那如果是 Map 呢，怎么约束 map 的 ts 类型？
 
-### 内置Extract(交集)
+### 内置 Extract(交集)
 
 ::: tip
-此题不属于type-challenges类型挑战题
+此题不属于 type-challenges 类型挑战题
 :::
 
 #### 用法
@@ -887,7 +887,7 @@ T extends U
 
 ## 中级
 
-### 内置ReturnType(函数返回类型)
+### 内置 ReturnType(函数返回类型)
 
 <link-and-solution num="2" />
 
@@ -913,7 +913,7 @@ type ReturnType<T extends (...args: any) => any> = T extends (...args: any) => i
 * `T extends (...args: any) => infer R`：判断`T`类型是否是一个函数的子类型，既`T`是不是一个函数。
 * `infer R`：表示待推导的函数返回类型为`R`，后续可以在表达式中使用`R`来代替真正的返回类型。
 
-### 内置Omit(移除)
+### 内置 Omit(移除)
 
 <link-and-solution num="3" />
 
@@ -936,7 +936,7 @@ type OmitResult = Omit<Person, 'address'>
 `Omit`可以借助在上面已经实现过的`Pick`和`Exclude`配合来实现，如下：
 
 ```ts
-// Omit实现
+// Omit 实现
 type MyOmit<T, K> = MyPick<T, MyExclude<keyof T, K>>
 ```
 
@@ -945,7 +945,7 @@ type MyOmit<T, K> = MyPick<T, MyExclude<keyof T, K>>
 * 使用`MyExclude<keyof T, K>`，可以从`T`中移除指定的字段，移除后得到一个新的联合类型：`'name'|'age'`
 * 使用`MyPick<T, 'name'|'age'>`，可以从`T`中选取这两个字段，组合成一个新的类型。
 
-### Readonly(按需Readonly)
+### Readonly(按需 Readonly)
 
 <link-and-solution num="8" />
 
@@ -989,11 +989,11 @@ obj.completed = false // error
 #### 实现方式
 
 ```ts
-// ts v4.4+版本可直接用
+// ts v4.4+ 版本可直接用
 type Readonly<T, K extends keyof T = keyof T> = T & {
   readonly [P in K]: T[P]
 }
-// ts v4.5+版本必须用
+// ts v4.5+ 版本必须用
 type Readonly<T, K extends keyof T = keyof T> = Omit<T, K> & {
   readonly [P in K]: T[P]
 }
@@ -1004,7 +1004,7 @@ type Readonly<T, K extends keyof T = keyof T> = Omit<T, K> & {
 * `K extends keyof T = keyof T`：如要传递了`K`，那么只能是`T`中已经存在的属性，不存在则报错；如果不传递，则默认值为`keyof T`，意味着全部属性都添加`readonly`。
 * `T & U`：在本例中表示将`T`和`U`中的字段结合起来，如果没有`&`会丢失一些属性，例如`title`。
 
-### DeepReadonly(深度Readonly)
+### DeepReadonly(深度 Readonly)
 
 <link-and-solution num="9" />
 
@@ -1173,14 +1173,14 @@ type Last<T extends any[]> = T extends [...infer R, infer L] ? L : never
 const T = [1, 2, 3]
 // 新数组
 const arr = [any, 1, 2, 3]
-// 结果: 3
+// 结果：3
 const result = arr[T['length']]
 ```
 
 * `T['length']`：这里我们获取到的是原始`T`数组的长度，例如`[1, 2, 3]`，长度值为`3`。而在新数组中，索引为`3`的位置正好是最后一个元素的索引，通过这种方式就能达到我们的目的。
 * `T extends [...infer R, infer L]`：这段代码表示，我们将原数组中最后一个元素使用`L`进行占位，而其它元素我们用一个`R`数组表示。这样，如果数组满足这种格式，就能正确返回最后一个元素的值。
 
-### Pop(数组Pop方法)
+### Pop(数组 Pop 方法)
 
 <link-and-solution num="16" />
 
@@ -1189,16 +1189,16 @@ const result = arr[T['length']]
 #### 用法
 
 ```ts
-// 结果1：[1, 2]
+// 结果 1：[1, 2]
 type result1 = Pop<[1, 2, 3]>
-// 结果2：[]
+// 结果 2：[]
 type result2 = Pop<[]>
 ```
 
 #### 实现方式
 
 ```ts
-// Pop实现
+// Pop 实现
 type Pop<T extends any[]> =
   T extends []
     ? []
@@ -1207,7 +1207,7 @@ type Pop<T extends any[]> =
       : never
 ```
 
-### PromiseAll返回类型
+### PromiseAll 返回类型
 
 <link-and-solution num="20" />
 
@@ -1221,13 +1221,13 @@ const result2 = PromiseAll([1, 2, Promise.resolve(3)] as const)
 const result3 = PromiseAll([1, 2, Promise.resolve(3)])
 const result4 = PromiseAll<Array<number | Promise<number>>>([1, 2, 3])
 
-// 结果1： Promise<[1, 2, 3]>
+// 结果 1：Promise<[1, 2, 3]>
 type t1 = typeof result1
-// 结果2： Promise<[1, 2, number]>
+// 结果 2：Promise<[1, 2, number]>
 type t2 = typeof result2
-// 结果3： Promise<[number, number, number]>
+// 结果 3：Promise<[number, number, number]>
 type t3 = typeof result3
-// 结果4： Promise<number[]>
+// 结果 4：Promise<number[]>
 type t4 = typeof result4
 ```
 
@@ -1291,7 +1291,7 @@ type LookUp<
 * `U extends { type: string; }`：这段代码限制`U`的类型必须是具有属性为`type`的对象。
 * `U extends { type: T }`：如果把`T`的值实际带入，为`U extends { type: 'dog' }`，表示判断`U`中的`type`值是不是`dog`，是则返回`U`。
 
-### Trim、TrimLeft以及TrimRight
+### Trim、TrimLeft 以及 TrimRight
 
 TrimLeft：
 <link-and-solution num="106" />
@@ -1327,7 +1327,7 @@ type TrimRight<S extends string> = S extends `${infer R}${Space}` ? TrimRight<R>
 * `TrimLeft`和`TrimRight`的实现思路是相同的，区别在于空白符的占位出现在左侧还是右侧。
 * `Trim`的实现就是把`TrimLeft`和`TrimRight`所做的事情结合起来。
 
-### Capitalize(首字母大写)和UnCapitalize(首字母小写)
+### Capitalize(首字母大写) 和 UnCapitalize(首字母小写)
 
 <link-and-solution num="110" />
 
@@ -1361,9 +1361,9 @@ type UnCapitalize<S extends string> = S extends `${infer char}${infer L}` ? `${L
 `Replace`是用来将字符串中第一次出现的某段内容，使用指定的字符串进行替换，而`ReplaceAll`是全部替换，其用法如下：
 
 ```ts
-// 结果1：'foofoobar'
+// 结果 1：'foofoobar'
 type t1 = Replace<'foobarbar', 'bar', 'foo'>
-// 结果2： foobarbar
+// 结果 2：foobarbar
 type t2 = Replace<'foobarbar', '', 'foo'>
 ```
 
@@ -1444,9 +1444,9 @@ type AppendArgument<Fn, A> = Fn extends (...args: infer R) => infer T ? (...args
 `Permutation`是用来将联合类型中的每一个类型进行排列组合，其用法如下：
 
 ```ts
-// 结果1：['A', 'B'] | ['B', 'A']
+// 结果 1：['A', 'B'] | ['B', 'A']
 type result1 = Permutation<'A' | 'B'>
-// 结果2：['A', 'B', 'C'] | ['A', 'C', 'B'] | ['B', 'A', 'C'] | ['B', 'C', 'A'] | ['C', 'A', 'B'] | ['C', 'B', 'A']
+// 结果 2：['A', 'B', 'C'] | ['A', 'C', 'B'] | ['B', 'A', 'C'] | ['B', 'C', 'A'] | ['C', 'A', 'B'] | ['C', 'B', 'A']
 type result2 = Permutation<'A' | 'B' | 'C'>
 ```
 
@@ -1542,7 +1542,7 @@ type Flatten<
 
 #### 用法
 
-`AppendToObject`是用来向指定对象添加一个额外的属性(`key/value`)，其用法如下：
+`AppendToObject`是用来向指定对象添加一个额外的属性 (`key/value`)，其用法如下：
 
 ```ts
 // 结果：{ id: number; name: string; }
@@ -1573,9 +1573,9 @@ type AppendToObject<T, K extends basicKeyType, V> = {
 `Absolute`是用来取一个数的绝对值的，其用法如下：
 
 ```ts
-// 结果1："531"
+// 结果 1："531"
 type result1 = Absolute<-531>
-// 结果2："9999"
+// 结果 2："9999"
 type result2 = Absolute<9_999n>
 ```
 
@@ -1607,7 +1607,7 @@ type result = MakeArray<'3'>['length']
 ### StringToArray(字符串转数组)
 
 ::: tip
-此题不属于type-challenges类型挑战题
+此题不属于 type-challenges 类型挑战题
 :::
 
 #### 用法
@@ -1654,7 +1654,7 @@ type StringToUnion<
 > = S extends `${infer Char}${infer R}`
       ? Char | StringToUnion<R>
       : never
-// way2: 借用StringToArray
+// way2: 借用 StringToArray
 type StringToUnion<S extends string> = StringToArray<S>[number]
 ```
 
@@ -1773,9 +1773,9 @@ type Diff<T, U> = {
 `AnyOf`用来判断数组元素真假值的，如果任一值为真，返回`true`；数组为空或者全部为`false`，才返回`false`，其用法如下：
 
 ```ts
-// 结果1：true
+// 结果 1：true
 type result1 = AnyOf<[0, false, 0, { name: 'name' }]>
-// 结果2：false
+// 结果 2：false
 type result2 = AnyOf<[0, '', false, [], {}]>
 
 ```
@@ -1790,7 +1790,7 @@ type AnyOf<T extends readonly any[]> = T[number] extends FalsyType ? false : tru
 
 代码详解：因为我们就是要区分`true/false`，所以我们把所有为`false`的值全部列举出来，然后使用`T[number]`索引迭代，依次去跟`FalsyType`比较，其中`{ [key: string]: never }`表示空对象`{}`。
 
-### IsNever(是否是Never类型)
+### IsNever(是否是 Never 类型)
 
 <link-and-solution num="1042" />
 
@@ -1800,11 +1800,11 @@ type AnyOf<T extends readonly any[]> = T[number] extends FalsyType ? false : tru
 `IsNever`是用来判断是否为`never`类型，其用法如下：
 
 ```ts
-// 结果1：false
+// 结果 1：false
 type result1 = IsNever<undefined>
-// 结果2：true
+// 结果 2：true
 type result2 = IsNever<never>
-// 结果3：false
+// 结果 3：false
 type result3 = IsNever<never | string>
 
 ```
@@ -1835,11 +1835,11 @@ type IsNever<T> = Equal<T, never>
 `IsUnion`是用来判断一个类型是否为联合类型的，其用法如下：
 
 ```ts
-// 结果1：true
+// 结果 1：true
 type result1 = IsUnion<string|number|boolean>
-// 结果2：false
+// 结果 2：false
 type result2 = IsUnion<string>
-// 结果3：false
+// 结果 3：false
 type result2 = IsUnion<never>
 ```
 
@@ -1895,7 +1895,7 @@ result: false
 
 
 #### 用法
-`ReplaceKeys`是用来在一个类型中，使用指定的Y类型来替换已经存在的T类型的，其用法如下：
+`ReplaceKeys`是用来在一个类型中，使用指定的 Y 类型来替换已经存在的 T 类型的，其用法如下：
 
 ```ts
 // 结果：{ id: number; name: boolean; }
@@ -2025,7 +2025,7 @@ type PercentageParser<S extends string> =
 
 代码详解：
 * `CheckPrefix`是用来处理百分比字符串前面的符号的，如果存在`+`或者`-`，则原样返回，如果不存在则返回`never`，表示没有符号。
-* `CheckSuffix`是用来处理百分比字符串后面的百分比符号的，如果存在，则返回一个数组(最后一项固定为百分比符号)；如果不存在，则返回的数组最后一个元素固定为空字符串。
+* `CheckSuffix`是用来处理百分比字符串后面的百分比符号的，如果存在，则返回一个数组 (最后一项固定为百分比符号)；如果不存在，则返回的数组最后一个元素固定为空字符串。
 
 ### DropChar(移除字符)
 
@@ -2122,7 +2122,7 @@ type PickByType<T, U> = {
 
 代码详解：`PickByType`的实现，可以使用`as`进行第二次断言，当类型满足时就返回当前迭代的`P`，不满足类型时就返回`never`，因为`never`最后会被排除，所以最后的迭代结果只有满足类型的键。
 
-### StartsWith(字符串startsWith方法)
+### StartsWith(字符串 startsWith 方法)
 
 <link-and-solution num="2688" />
 
@@ -2147,7 +2147,7 @@ type StartsWith<
 ```
 
 
-### EndsWith(字符串endsWith方法)
+### EndsWith(字符串 endsWith 方法)
 
 <link-and-solution num="2693" />
 
@@ -2217,7 +2217,7 @@ type PartialByKeys<
 * `CopyKeys`部分：如果不使用`CopyKeys`，最后的结果为`T & U`形式，它实际上与使用`CopyKeys`的结果是一样的。这里使用`CopyKeys`，很大程度上是为了测试。
 
 ```ts
-// 使用CopyKeys，结果为true；不使用，结果为false
+// 使用 CopyKeys，结果为 true；不使用，结果为 false
 type result1 = Equal<PartialByKeys<User, 'name'>, UserPartialName>
 
 ```
@@ -2274,7 +2274,7 @@ type RequiredByKeys<
 
 
 #### 用法
-`Mutable`是用来让所有属性变为可改的(移除`readonly`关键词)，其用法为：
+`Mutable`是用来让所有属性变为可改的 (移除`readonly`关键词)，其用法为：
 
 ```ts
 type Person = {
@@ -2376,14 +2376,14 @@ type ObjectEntries<T> = {
 type Person = {
   name?: string
 }
-// 结果都为true
+// 结果都为 true
 type result1 = {} extends Person ? true : false
 type result2 = { name: string; } extends Person ? true : false
 
 ```
 
 
-### Shift(数组shift方法)
+### Shift(数组 shift 方法)
 
 <link-and-solution num="3062" />
 
@@ -2391,7 +2391,7 @@ type result2 = { name: string; } extends Person ? true : false
 #### 用法
 
 ```ts
-// Shift结果：[2, 3]
+// Shift 结果：[2, 3]
 type shiftResult = Shift<[1, 2, 3]>
 
 ```
@@ -2399,7 +2399,7 @@ type shiftResult = Shift<[1, 2, 3]>
 #### 实现方式
 
 ```ts
-// Shift实现
+// Shift 实现
 type Shift<T extends any[]> = T extends [infer F, ...infer R] ? R : []
 
 ```
@@ -2520,7 +2520,7 @@ type FlattenDepth<
 
 ```
 
-代码详解：`FlattenDepth`的实现思路和`Flatten`基本一致，区别是按深度降维时需要一个数组去记录降维的次数(深度)。
+代码详解：`FlattenDepth`的实现思路和`Flatten`基本一致，区别是按深度降维时需要一个数组去记录降维的次数 (深度)。
 
 ### BEM
 
@@ -2528,7 +2528,7 @@ type FlattenDepth<
 
 
 #### 用法
-`BEM`是用来将字符串连接成CSS BEM格式的，其用法如下：
+`BEM`是用来将字符串连接成 CSS BEM 格式的，其用法如下：
 
 ```ts
 // 结果：'btn__primary--small' | 'btn__primary--mini'
@@ -2557,7 +2557,7 @@ type BEM<
 * `T[number]`会自动迭代数组，例如：
 
 ```ts
-// 结果: 'A__B' | 'A__C' | 'A__D'
+// 结果：'A__B' | 'A__C' | 'A__D'
 type result = `A__${['B', 'C', 'D'][number]}`
 
 ```
@@ -2589,7 +2589,7 @@ const tree = {
   },
 }
 
-// 结果: [1, 3, 2]
+// 结果：[1, 3, 2]
 type result = InOrderTraversal<typeof tree>
 
 ```
@@ -2628,7 +2628,7 @@ type PostOrderTraversal<
 * `[T] extends [TreeNode]`: 使用此形式而不用`T extends TreeNode`，这是因为`T`是一个`TreeNode | null`，在左侧会进行分布式条件类型，判断两次：
 
 ```ts
-// 如果Tree嵌套比较深的话，ts会报错
+// 如果 Tree 嵌套比较深的话，ts 会报错
 TreeNode extends TreeNode |
 null extends TreeNode
 
@@ -2690,9 +2690,9 @@ type Fibonacci<
 ```
 
 代码详解：
-* `Index`：标记当前数列是第几项，从1开始。
-* `Prev`：存储数列上一次计算的值，从0开始。
-* `Current`: 标记当前数列的值，根据数列的特点，第N项的值，等于`N - 1`项 + `N - 2`项的值，即：`Current = [...Prev, ...Current]`
+* `Index`：标记当前数列是第几项，从 1 开始。
+* `Prev`：存储数列上一次计算的值，从 0 开始。
+* `Current`: 标记当前数列的值，根据数列的特点，第 N 项的值，等于`N - 1`项 + `N - 2`项的值，即：`Current = [...Prev, ...Current]`
 
 ### AllCombinations(全排列)
 
@@ -2740,7 +2740,7 @@ type result = StringToUnion<'AB'>
 * `Combination`是用来将联合类型进行排列组合的，以以上`'A' | 'B'`这个联合类型为例，步骤如下：
 
 ```ts
-// 第一步：从'A' | 'B这个联合类型中排除当前迭代的字符'A'
+// 第一步：从'A' | 'B 这个联合类型中排除当前迭代的字符'A'
 K = 'A' S = 'A' | 'B'  => Exclude<'A' | 'B', 'A'>
 // 第一步子递归：
 Combination<'B', '' | 'A'> => '' | 'A' | `${'' | 'A'}B` => '' | 'A' | 'B' | 'AB'
@@ -2762,7 +2762,7 @@ result = '' | 'A' | 'AB' | 'B' | 'BA'
 
 
 #### 用法
-`GreaterThan<T, N>`是来用判断正整数T是否大于正整数N的，其用法如下：
+`GreaterThan<T, N>`是来用判断正整数 T 是否大于正整数 N 的，其用法如下：
 
 ```ts
 // 结果：true
@@ -2848,17 +2848,17 @@ type IsTuple<T> =
 代码解析：以上代码中，比较关键的代码是`number extends T['length']`，这里不能写成`T['length'] extends number`，如下：
 
 ```ts
-// case1：需要返回false，因为它不定长，违反了元组的定义
+// case1：需要返回 false，因为它不定长，违反了元组的定义
 type result1 = IsTuple<number[]>
-// case2：需要返回true，因为它定长，只不过长度为0
+// case2：需要返回 true，因为它定长，只不过长度为 0
 type result2 = IsTuple<[]>
 
-// case1计算逻辑，T['length']返回的是number，不是一个确定的值
+// case1 计算逻辑，T['length'] 返回的是 number，不是一个确定的值
 number extends T['length']
 => number extends number
 => true
 
-// case2计算逻辑，T['length']返回的是0
+// case2 计算逻辑，T['length'] 返回的是 0
 number extends T['length']
 => number extends 0
 => false
@@ -2866,12 +2866,12 @@ number extends T['length']
 ```
 
 
-### Chunk(lodash分割数组)
+### Chunk(lodash 分割数组)
 
 <link-and-solution num="4499" />
 
 
-[Lodash Chunk](https://www.lodashjs.com/docs/lodash.chunk): 将一个数组分割成长度为N的多个小数组。
+[Lodash Chunk](https://www.lodashjs.com/docs/lodash.chunk): 将一个数组分割成长度为 N 的多个小数组。
 #### 用法
 
 ```ts
@@ -2900,7 +2900,7 @@ type Chunk<
 代码详解：实现`Chunk`大体思路是：借助一个辅助空数组，在遍历数组时往这个辅助数组中添加元素，一直到等于指定长度，然后进行下一次相同操作。
 
 
-### Fill(数组fill方法)
+### Fill(数组 fill 方法)
 
 <link-and-solution num="4518" />
 
@@ -2943,15 +2943,15 @@ type Fill<
 type result = Fill<[1, 2, 3], true, 1, 3>
 
 // 第一次遍历 Count = [], Flag = false, T = [1, 2, 3]
-// 满足Flag extends false条件，Count = [0]
+// 满足 Flag extends false 条件，Count = [0]
 
 // 第二次遍历 Count = [0], Flag = true(计算而言)，T = [1, 2, 3]
-// 不满足Flag extends false条件，开始替换，Count = [0, 0], T = [1, true, 3]
+// 不满足 Flag extends false 条件，开始替换，Count = [0, 0], T = [1, true, 3]
 
 // 第三次遍历 Count = [0, 0], Flag = true(主动传递), T =[1, true, 3]
-// 不满足Flag extends false条件，开始替换，Count = [0, 0, 0], T = [1, true, true]
+// 不满足 Flag extends false 条件，开始替换，Count = [0, 0, 0], T = [1, true, true]
 
-// 最后一次判断 Count = [0, 0, 0]，长度等于End，结束，T = [1, true, true]
+// 最后一次判断 Count = [0, 0, 0]，长度等于 End，结束，T = [1, true, true]
 
 ```
 
@@ -2989,7 +2989,7 @@ type Without<
 
 代码详解：因为`F`支持单数字和数组，所以定义一个`ToUion`来统一处理成联合类型。随后直接遍历数组，如果当前迭代的元素在联合类型中，则直接跳过进行下一次迭代；否则，把当前迭代元素添加到`R`辅助数组中。
 
-### Trunc(Math.trunc取整)
+### Trunc(Math.trunc 取整)
 
 <link-and-solution num="5140" />
 
@@ -2998,9 +2998,9 @@ type Without<
 `Trunc`是用来实现`Math.trunc()`方法的，其用法如下：
 
 ```ts
-// 结果1：100
+// 结果 1:100
 type result1 = Trunc<100.32>
-// 结果2：0
+// 结果 2:0
 type result2 = Trunc<.3>
 
 ```
@@ -3019,7 +3019,7 @@ type Trunc<
 ```
 
 
-### IndexOf(数组indexOf方法)
+### IndexOf(数组 indexOf 方法)
 
 <link-and-solution num="5153" />
 
@@ -3061,7 +3061,7 @@ type result2 = IsEqual<'a', string> // false
 ```
 
 
-### Join(数组join方法)
+### Join(数组 join 方法)
 
 <link-and-solution num="5310" />
 
@@ -3091,7 +3091,7 @@ type Join<
 ```
 
 
-### LastIndexOf(数组lastIndexOf方法)
+### LastIndexOf(数组 lastIndexOf 方法)
 
 <link-and-solution num="5317" />
 
@@ -3198,13 +3198,13 @@ type MapTypes<T, R> = {
 * `R extends { mapFrom: T, mapTo: infer To }`：这段代码表示，`R`是不是右边的子类型，我们以以上案例来说明：
 
 ```ts
-// 当P = 'type'时，
+// 当 P = 'type'时，
 T[P] = string, R = { mapFrom: string;mapTo: number; }
 => { mapFrom: string; mapTo: number; } extends { mapFrom: string, mapTo: infer To }
 => To = number
 => { type: number }
 
-// 当P = 'age'时
+// 当 P = 'age'时
 T[P] = number, R = { mapFrom: string;mapTo: number; }
 => { mapFrom: string; mapTo: number; } extends { mapFrom: number, mapTo: infer To }
 => never
@@ -3318,9 +3318,9 @@ type result = ['a', ...(['b'] | ['c'])]
 `CheckRepeatedChars`是用来检查字符串中是否存在重复字符的，其用法如下：
 
 ```ts
-// 结果1：false
+// 结果 1：false
 type result1 = CheckRepeatedChars<'abc'>
-// 结果2：true
+// 结果 2：true
 type result2 = CheckRepeatedChars<'abb'>
 
 ```
@@ -3351,9 +3351,9 @@ type CheckRepeatedChars<
 `FirstUniqueCharIndex`是用来获取字符串中第一个唯一字符的索引的，其用法如下：
 
 ```ts
-// 结果1： 0(字符l)
+// 结果 1:0(字符 l)
 type result1 = FirstUniqueCharIndex<'leetcode'>
-// 结果2： 2(字符v)
+// 结果 2:2(字符 v)
 type result2 = FirstUniqueCharIndex<'loveleetcode'>
 
 ```
@@ -3381,7 +3381,7 @@ type FirstUniqueCharIndex<
 代码详解：此题的实现思路和`FirstUniqueCharIndex`类似，只是多了一层判断，以上面案例为例：
 
 ```ts
-// 结果： 2(字符v)
+// 结果：2(字符 v)
 type result = FirstUniqueCharIndex<'loveleetcode'>
 
 // 第一次迭代时：S = loveleetcode R = [] R[number] = never First = l
@@ -3399,7 +3399,7 @@ type result = FirstUniqueCharIndex<'loveleetcode'>
 ```
 
 
-### ParseUrlParams(解析url路径参数)
+### ParseUrlParams(解析 url 路径参数)
 
 <link-and-solution num="9616" />
 
@@ -3436,9 +3436,9 @@ type ParseUrlParams<
 `GetMiddleElement`是用来取数组中位数的，其用法如下：
 
 ```ts
-// 结果1： [2]
+// 结果 1： [2]
 type result1 = GetMiddleElement<[1, 2, 3]>
-// 结果2： [2, 3]
+// 结果 2： [2, 3]
 type result2 = GetMiddleElement<[1, 2, 3, 4]>
 
 ```
@@ -3458,7 +3458,7 @@ type GetMiddleElement<
 
 代码详解：
 * `T['length'] extends 0 | 1 | 2`：当数组长度小于等于而时，其中位数就是自身。
-* `T extends [any, ...infer Middle, any]`: 当长度大于2时，每次迭代去掉首、尾元素，直至数组长度小于等于2，返回。
+* `T extends [any, ...infer Middle, any]`: 当长度大于 2 时，每次迭代去掉首、尾元素，直至数组长度小于等于 2，返回。
 
 ### FindOnlyElements(数组只出现一次的元素)
 
@@ -3469,9 +3469,9 @@ type GetMiddleElement<
 `FindOnlyElements`是用来获取数组中只出现一次的元素，其用法如下：
 
 ```ts
-// 结果1： [1, 2, 3]
+// 结果 1： [1, 2, 3]
 type result1 = FindOnlyElements<[1, 2, 3]>
-// 结果2： [1]
+// 结果 2： [1]
 type result2 = FindOnlyElements<[1, 2, 3, 2, 3]>
 
 ```
@@ -3501,9 +3501,9 @@ type FindOnlyElements<
 `CountArrayElement`是用来实现计算数组中元素出现次数的，其用法如下：
 
 ```ts
-// 结果1: { 1: 1, 2: 1, 3: 1 }
+// 结果 1: { 1: 1, 2: 1, 3: 1 }
 type result1 = CountArrayElement<[1, 2, 3]>
-// 结果2: { 1: 2, 2: 2, 3: 1 }
+// 结果 2: { 1: 2, 2: 2, 3: 1 }
 type result2 = CountArrayElement<[1, 2, 2, 1, 3]>
 
 ```
@@ -3541,7 +3541,7 @@ type CountArrayElement<
 
 代码详解：
 * `Flatten`：实现`Flatten`，用来处理传递多维数组的情况，例如：`CountArrayElement<[1, [1, 2], 3, [4, [5]]]>`
-* `First extends keyof R`: 如果当前数组的遍历项是`R`对象中的一个键，则表明需要计数加一；如果不是，则代表是新项，需要计数为1；
+* `First extends keyof R`: 如果当前数组的遍历项是`R`对象中的一个键，则表明需要计数加一；如果不是，则代表是新项，需要计数为 1；
 * `[P in keyof R]: R[P]['length']`: 因为最后结果需要返回数组，而非数组，所以迭代`R`对象，返回其每个属性的数组长度即可。
 
 ### Integer(数字整数)
@@ -3553,9 +3553,9 @@ type CountArrayElement<
 `Integer`是用来返回数字的整数部分的，如果传入的数子包含小数，则返回`never`，其用法如下：
 
 ```ts
-// 结果1：1
+// 结果 1:1
 type result1 = Integer<1>
-// 结果2：never
+// 结果 2：never
 type result1 = Integer<1.1>
 
 ```
@@ -3572,7 +3572,7 @@ type Integer<T extends number> = `${T}` extends `${bigint}` ? T : never
 * `${T}` extends `${bigint}`：这里转成字符串形式比较，不能直接比较，因为`number`和`bigint`是两个不同的类型。
 
 ```ts
-// 结果：都是false
+// 结果：都是 false
 type result1 = number extends bigint ? true : false
 type result2 = bigint extends number ? true : false
 
@@ -3639,14 +3639,14 @@ type ToPrimitive<
 * 对于普通类型来说，判断其是否满足`T extends { valueOf: () => infer R }`，是则返回其类型。
 
 ```ts
-// ts中的valueOf是js中的valueOf一样
+// ts 中的 valueOf 是 js 中的 valueOf 一样
 const num = 123
 console.log(num.valueOf()) // 123
 
 ```
 
 
-### DeepMutable(深度Mutable)
+### DeepMutable(深度 Mutable)
 
 <link-and-solution num="17973" />
 
@@ -3699,9 +3699,9 @@ type DeepMutable<
 `AllMatch`是用来判断，数组元素是否与给定元素完全相同的，其用法如下：
 
 ```ts
-// 结果1：true
+// 结果 1：true
 type result1 = AllMatch<[1, 1, 1], 1>
-// 结果2：false
+// 结果 2：false
 type result2 = AllMatch<[1, 1, 2], 1>
 
 ```
@@ -3746,9 +3746,9 @@ type AllMatch<
 `Filter`是用来实现数组过滤方法的，其用法如下：
 
 ```ts
-// 结果1：[2]
+// 结果 1：[2]
 type result1 = Filter<[0, 1, 2], 2>
-// 结果2：[1, 2]
+// 结果 2：[1, 2]
 type result2 = Filter<[0, 1, 2], 1 | 2>
 
 ```
@@ -3777,11 +3777,11 @@ type Filter<
 `FindAllIndex`是用来返回字符串中所有匹配索引的，其用法如下：
 
 ```ts
-// 结果1：[11]
+// 结果 1：[11]
 type result1 = FindAllIndex<'TypeScript type challenges', 'type'>
-// 结果2：[2, 13]
+// 结果 2：[2, 13]
 type result2 = FindAllIndex<'TypeScript type challenges', 'pe'>
-// 结果3：[]
+// 结果 3：[]
 type result3 = FindAllIndex<'TypeScript type challenges', ''>
 
 ```
@@ -3868,7 +3868,7 @@ type ReplaceFirst<
 
 ## 困难
 
-### SimpleVue(简单Vue类型)
+### SimpleVue(简单 Vue 类型)
 
 <link-and-solution num="6" />
 
@@ -3977,7 +3977,7 @@ type UnionToIntersection<U> =
 ```
 
 代码详解：
-* `U extends any ? X : Y`： 这里把`U`类型处理成`(x: U) => any`的函数类型。
+* `U extends any ? X : Y`：这里把`U`类型处理成`(x: U) => any`的函数类型。
 * `T extends (x: infer V) => any ? V : never`：这里的`T`就是上一步的函数类型，如果`extends`成立，则返回`V`，此时的`V`必然满足`U & V`。
 
 ### RequiredKeys(所有必填字段)
@@ -4055,10 +4055,10 @@ type GetRequired<T> = {
 * `T[P] extends Required<T>[P] ? P : never`：用来判断当前遍历键的类型是否一致，一致则是必填类型。
 
 ```ts
-// P为name时
+// P 为 name 时
 type result1 = string | undefined extends string ? 'name' : never
 
-// P为age时
+// P 为 age 时
 type result2 = number extends number ? 'age' : never
 
 ```
@@ -4294,14 +4294,14 @@ result = R = ['string', 'dec']
 
 
 
-### VueBasicProps(Vue的Props类型)
+### VueBasicProps(Vue 的 Props 类型)
 
 <link-and-solution num="213" />
 
 #### 用法
 #### 实现方式
 
-### IsAny和NotAny
+### IsAny 和 NotAny
 
 <link-and-solution num="223" />
 
@@ -4391,7 +4391,7 @@ type Get<
 * 含有`.`符号的字符串：对于这种情况，我们先判断`.`符号左侧部分是否满足为`T`类型的某个`key`，如果满足，则递归调用`Get`；如果不满足，则直接返回`never`。
 
 ```ts
-// S1如果是T的属性键，则返回S1；如果不是，则返回never
+// S1 如果是 T 的属性键，则返回 S1；如果不是，则返回 never
 Get<T[S1 & keyof T], S2>
 // 等价于
 S1 extends keyof T ? Get<T[S1], S2> : never
@@ -4401,7 +4401,7 @@ S1 extends keyof T ? Get<T[S1], S2> : never
 * 不含有`.`符号的字符串：对于这种情况，我们只需要判断它是否为`T`类型中的某个`key`，如果是，则直接取值；如果不是，则返回`never`。
 
 ```ts
-// K如果是T的属性键，则返回K；如果不是，则返回never
+// K 如果是 T 的属性键，则返回 K；如果不是，则返回 never
 T[K & keyof T]
 // 等价于
 S extends keyof T ? T[S] : never
@@ -4509,16 +4509,16 @@ type StringToNumber<S extends string, T extends any[] = []> =
 ```ts
 type result = StringToNumber<'123'>
 
-// 第一次递归，S满足${infer S1}${infer S2}， S1满足Digital
+// 第一次递归，S 满足${infer S1}${infer S2}，S1 满足 Digital
 S = '123' S1 = '1' S2 = '23' T = [0] T['length'] = 1
 
-// 第二次递归，S满足${infer S1}${infer S2}， S1满足Digital
+// 第二次递归，S 满足${infer S1}${infer S2}，S1 满足 Digital
 S = '23'  S1 = '2' S2 = '3' T = [0,....0] T['length'] = 10
 
-// 第三次递归，S满足${infer S1}${infer S2}， S1满足Digital
+// 第三次递归，S 满足${infer S1}${infer S2}，S1 满足 Digital
 S = '3'  S1 = '3' S2 = '' T = [0,....0] T['length'] = 120
 
-// 第四次递归，S不满足${infer S1}${infer S2} T['length']取值
+// 第四次递归，S 不满足${infer S1}${infer S2} T['length'] 取值
 S = '' T = [0,....0] T['length'] = 123
 
 // 结果：
@@ -4628,11 +4628,11 @@ type TupleToEnum<
 `Format`是将字符串格式化为指定函数类型的，用法如下：
 
 ```ts
-// 结果1：(x: string) => string
+// 结果 1：(x: string) => string
 type result1 = Format<'a%sbc'>
-// 结果2：(x: number) => string
+// 结果 2：(x: number) => string
 type result2 = Format<'a%dbc'>
-// 结果3：(x: number) => (x: string) => string>
+// 结果 3：(x: number) => (x: string) => string>
 type result3 = Format<'a%dbc%s'>
 
 ```
@@ -4708,11 +4708,11 @@ R['length'] = 91
 `UnionToTuple`是用来将联合类型转成元组的，用法如下：
 
 ```ts
-// 结果1：['a', 'b']
+// 结果 1：['a', 'b']
 type result1 = UnionToTuple<'a'>
-// 结果2：['a', 'b']
+// 结果 2：['a', 'b']
 type result2 = UnionToTuple<'a' | 'b'>
-// 结果3：['a', 'b']
+// 结果 3：['a', 'b']
 type result3 = UnionToTuple<'a' | 'b' | never>
 
 
@@ -4768,9 +4768,9 @@ type result = UnionToIntersection<f1 | f2>
 type f1 = (x: 1) => 0
 type f2 = (x: 2) => 0
 
-// 结果1：2
+// 结果 1:2
 type result1 = f1 & f2 extends (x: infer R) => 0 ? R : never
-// 结果2：1
+// 结果 2:1
 type result2 = f2 & f1 extends (x: infer R) => 0 ? R : never
 
 ```
@@ -4785,13 +4785,13 @@ type result2 = f2 & f1 extends (x: infer R) => 0 ? R : never
 `Join`是用来实现拼接字符串的，用法如下：
 
 ```ts
-// 结果1： ''
+// 结果 1： ''
 const Expected1 = join('-')();
-// 结果2： 'a'
+// 结果 2： 'a'
 const Expected2 = join('-')('a');
-// 结果3： 'abc'
+// 结果 3： 'abc'
 const Expected3 = join('')('a', 'b', 'c');
-// 结果4： 'a-b-c'
+// 结果 4： 'a-b-c'
 const Expected4 = join('-')('a', 'b', 'c');
 
 ```
@@ -4814,7 +4814,7 @@ declare function join<D extends string>(delimiter: D): <P extends string[] = []>
 ```
 
 
-### DeepPick(深层次Pick)
+### DeepPick(深层次 Pick)
 
 <link-and-solution num="956" />
 
@@ -4838,11 +4838,11 @@ type Obj = {
     }
   }
 }
-// 结果1：Obj
+// 结果 1：Obj
 type result1 = DeepPick<Obj, ''>
-// 结果2：{ a: number; }
+// 结果 2：{ a: number; }
 type result2 = DeepPick<Obj, 'a'>
-// 结果3：{ a: number; } & { obj: { d: number; } }
+// 结果 3：{ a: number; } & { obj: { d: number; } }
 type result3 = DeepPick<Obj, 'a', 'obj.d'>
 
 ```
@@ -4970,7 +4970,7 @@ type DropString<
 
 代码详解：实现`DropString`的核心是将指定的字符串转换为联合类型，转换之后只需要迭代字符串，判断当前迭代的字符是不是在联合类型中，如果是则直接丢弃，不是则原样保留。
 
-### Split(字符串Split方法)
+### Split(字符串 Split 方法)
 
 <link-and-solution num="2822" />
 
@@ -5011,7 +5011,7 @@ type Split<
 #### 用法
 #### 实现方式
 
-### IsRequiredKeys(是否为必填key)
+### IsRequiredKeys(是否为必填 key)
 
 <link-and-solution num="2857" />
 
@@ -5024,9 +5024,9 @@ type Obj = {
   a: number,
   b?: string
 }
-// 结果1：true
+// 结果 1：true
 type result1 = IsRequiredKeys<Obj, 'a'>
-// 结果2：false
+// 结果 2：false
 type result2 = IsRequiredKeys<Obj, 'b'>
 
 ```
@@ -5043,15 +5043,15 @@ type IsRequiredKey<T, K extends keyof T> = T extends Record<K, T[K]> ? true : fa
 ```ts
 type IsOptionalKey<T, K extends keyof T> = {} extends { [P in K]: T[P] } ? true : false
 
-// 结果1：false
+// 结果 1：false
 type result1 = IsOptionalKey<Obj, 'a'>
-// 结果2：true
+// 结果 2：true
 type result2 = IsOptionalKey<Obj, 'b'>
 
 ```
 
 
-### ObjectEntries(对象Object.entries方法)
+### ObjectEntries(对象 Object.entries 方法)
 
 <link-and-solution num="2949" />
 
@@ -5093,7 +5093,7 @@ type result2 = IsOptionalKey<Obj, 'b'>
 #### 用法
 #### 实现方式
 
-### TwoSum(LeetCode两数之和)
+### TwoSum(LeetCode 两数之和)
 
 <link-and-solution num="8804" />
 
@@ -5107,7 +5107,7 @@ type result2 = IsOptionalKey<Obj, 'b'>
 #### 用法
 #### 实现方式
 
-### Assign(对象Object.assign方法)
+### Assign(对象 Object.assign 方法)
 
 <link-and-solution num="9160" />
 
@@ -5135,7 +5135,7 @@ type result2 = IsOptionalKey<Obj, 'b'>
 #### 用法
 #### 实现方式
 
-### FizzBuzz(Fizz和Buzz输出问题)
+### FizzBuzz(Fizz 和 Buzz 输出问题)
 
 <link-and-solution num="14080" />
 

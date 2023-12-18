@@ -54,6 +54,6 @@ const enum Color {
 const color: Color[] = [Color.RED, Color.BLUE, Color.GREEN];
 console.log(color); // [0, 1, 2]
 
-//编译之后的js如下：
+//编译之后的 js 如下：
 // var color = [0 /* RED */, 1 /* PINK */, 2 /* BLUE */];
-// 可以看到我们的枚举并没有被编译成js代码 只是把color这个数组变量编译出来了
+// 可以看到我们的枚举并没有被编译成 js 代码 只是把 color 这个数组变量编译出来了

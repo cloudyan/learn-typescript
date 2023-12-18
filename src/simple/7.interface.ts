@@ -114,7 +114,7 @@ person2 = new Person('Tom', 'admin123');
 
 console.log(person1.format()); // conardli
 
-// 确保 people 是一个实现 HasFormatter 的对象数组(确保每 people 都有 format 方法):
+// 确保 people 是一个实现 HasFormatter 的对象数组 (确保每 people 都有 format 方法):
 let people: HasFormatter[] = [];
 people.push(person1);
 people.push(person2);

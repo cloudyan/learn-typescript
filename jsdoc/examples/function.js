@@ -10,14 +10,14 @@ var function1;
 
 
 /**
- * 用TypeScript的语法来定义函数类型
+ * 用 TypeScript 的语法来定义函数类型
  * @type {(s: string, b: boolean) => number}
  */
 var function2;
 
 
 /**
- * 使用内置的Function类型，不指定参数和返回值
+ * 使用内置的 Function 类型，不指定参数和返回值
  * @type {Function}
  */
 var function3;

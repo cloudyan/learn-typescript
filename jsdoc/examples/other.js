@@ -1,6 +1,6 @@
 // @ts-check
 // 定义 this 指向 @this
-// - VS Code可以帮我们做一些类型推断。但是有一些场景没法很好的做出推断，通过使用@this可以帮助我们来显式指定 this 的类型。
+// - VS Code 可以帮我们做一些类型推断。但是有一些场景没法很好的做出推断，通过使用@this 可以帮助我们来显式指定 this 的类型。
 
 /**
  * @this {HTMLElement}
@@ -10,30 +10,30 @@ function getScrollbarWidth() {
 }
 
 // 其他
-// @type 关于Nullable和Non-nullable
-// - JSDoc中关于@type有 Nullable Type 和 Non-nullable Type 的概念，
-// - 但是在TypeScript中只允许根据 strictNullChecks 标记类型为是否可以为null，
-// - 并不能通过显示标注 non-nullablity 来实现和JSDoc的一致
+// @type 关于 Nullable 和 Non-nullable
+// - JSDoc 中关于@type 有 Nullable Type 和 Non-nullable Type 的概念，
+// - 但是在 TypeScript 中只允许根据 strictNullChecks 标记类型为是否可以为 null，
+// - 并不能通过显示标注 non-nullablity 来实现和 JSDoc 的一致
 
 /**
- * 在JSDoc中标记为可能为number或null类型
+ * 在 JSDoc 中标记为可能为 number 或 null 类型
  * @type {?number}
  */
 
 /**
- * 在JSDoc中标记为number类型，并且不可能为null类型
+ * 在 JSDoc 中标记为 number 类型，并且不可能为 null 类型
  * @type {!number}
  */
 
 /**
-  * 以上两种写法，在TypeScript下都等价于如下
+  * 以上两种写法，在 TypeScript 下都等价于如下
   * @type {number}
   */
 
 
 
-// 在TypeScript中导入其他文件中的定义
-// 这是在TypeScript中独有的，JSDoc并不支持
+// 在 TypeScript 中导入其他文件中的定义
+// 这是在 TypeScript 中独有的，JSDoc 并不支持
 
 // b.js
 /**

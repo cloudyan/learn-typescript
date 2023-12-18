@@ -21,7 +21,7 @@ person[0] = 100;
 person[1] = {name: 'ConardLi'} // Error - person array can't contain objects
 
 
-// 如果数组有默认值， TypeScript 同样也会进行类型推断：
+// 如果数组有默认值，TypeScript 同样也会进行类型推断：
 let person2 = ['ConardLi', 1, true]; // 和上面的例子一样
 person2[0] = 100;
 person2[1] = { name: 'ConardLi' }; // Error - person array can't contain objects
@@ -34,4 +34,4 @@ let person: [string, number, boolean] = ['ConardLi', 1, true];
 person[0] = 17; // Error - Value at index 0 can only be a string
 
 // 注意：元组类型只能表示一个已知元素数量和类型的数组，长度已指定，越界访问会提示错误。
-// 例如，一个数组中可能有多种类型，数量和类型都不确定，那就直接any[]。
+// 例如，一个数组中可能有多种类型，数量和类型都不确定，那就直接 any[]。

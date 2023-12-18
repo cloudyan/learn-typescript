@@ -15,11 +15,11 @@
 
 为什么要使用严格模式？
 
-严格模式**可以消除语法里一些不合理，不严谨的地方，可以让TS往更合理、更安全、更严谨的方向去发展**:
+严格模式**可以消除语法里一些不合理，不严谨的地方，可以让 TS 往更合理、更安全、更严谨的方向去发展**:
 
-- 通过将一些TS的静默错误更改为抛出错误，消除了TS的一些静默错误，能更加有效保障代码运行的安全；
+- 通过将一些 TS 的静默错误更改为抛出错误，消除了 TS 的一些静默错误，能更加有效保障代码运行的安全；
 - 提高编译器效率，增加运行速度；
-- 禁止一些可能在ECMAScript未来版本中定义的语法。
+- 禁止一些可能在 ECMAScript 未来版本中定义的语法。
 
 ### 禁止隐式 any
 
@@ -47,7 +47,7 @@ function logName(a) {
 
 当 strictNullChecks 选项为 false 时，TypeScript 实际上会忽略 null 和 undefined。这可能会在运行时导致意外错误。
 
-当 strictNullChecks 设置为 true 时，null 和 undefined 有它们自己的类型，如果你将它们分配给一个期望具体值(例如，字符串)的变量，则会得到一个类型错误。
+当 strictNullChecks 设置为 true 时，null 和 undefined 有它们自己的类型，如果你将它们分配给一个期望具体值 (例如，字符串) 的变量，则会得到一个类型错误。
 
 ```ts
 let whoSangThis: string = getSong();
@@ -64,7 +64,7 @@ console.log(single.artist);
 
 singles.find 并不能保证它一定能找到这首歌 — 但是我们已经编写了下面的代码，好像它肯定能找到一样。
 
-通过将 strictNullChecks 设置为 true， TypeScript 将抛出一个错误，因为在尝试使用它之前，我们没有保证 single 一定存在：
+通过将 strictNullChecks 设置为 true，TypeScript 将抛出一个错误，因为在尝试使用它之前，我们没有保证 single 一定存在：
 
 ```ts
 const getSong = () => {
@@ -134,7 +134,7 @@ function getSpeedRatio(v: PlaneOrTrain) {
 }
 ```
 
-由于 getSpeedRatio 函数处理了多种类型，我们需要一种方法来区分 v 是 Plane 还是 Train 。我们可以通过给这两种类型一个共同的区别属性来做到这一点，它带有一个字符串值:
+由于 getSpeedRatio 函数处理了多种类型，我们需要一种方法来区分 v 是 Plane 还是 Train。我们可以通过给这两种类型一个共同的区别属性来做到这一点，它带有一个字符串值：
 
 ```ts
 interface Train extends Vehicle {
@@ -150,7 +150,7 @@ interface Plane extends Vehicle {
 type PlaneOrTrain = Plane | Train;
 ```
 
-现在，TypeScript 可以缩小 v 的类型:
+现在，TypeScript 可以缩小 v 的类型：
 
 ```ts
 function getSpeedRatio(v: PlaneOrTrain) {
@@ -205,7 +205,7 @@ async function loadProducts(): Promise<Product[]> {
 
 any 很简单，因为它从根本上禁用了所有类型检查。通常，即使在官方类型中也使用 any（例如，上面示例中的 response.json() 被 TypeScript 团队键入为 `Promise<any>`）。
 
-为什么不能用any？
+为什么不能用 any？
 
 它从根本上禁用所有类型检查。通过 any 进入的所有值都将完全放弃任何类型检查。这可能会变得非常难以捕捉错误，因为只有当我们对类型结构的假设符合运行时代码时，代码才会失败。
 

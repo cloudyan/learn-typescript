@@ -14,7 +14,7 @@ declare const REACT_APP_ENV: 'test' | 'dev' | 'pre' | false;
 // src/typings.d.ts
 // ... 代码省略
 declare const REACT_APP_ENV: 'test' | 'dev' | 'uat' | 'prod' | undefined;
-// 以下变量声明对应config.[env].ts文件内define的变量
+// 以下变量声明对应 config.[env].ts 文件内 define 的变量
 declare const API_URL: string;
 declare const API_SECRET_KEY: string;
 

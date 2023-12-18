@@ -10,5 +10,5 @@ let func4: (x: string) => {id: string, name: string} = (x: string) => ({id: '1',
 
 // func4 的类型兼容 func3 的类型
 func3 = func4
-// func3 的类型不兼容func4 的类型
+// func3 的类型不兼容 func4 的类型
 func4 = func3

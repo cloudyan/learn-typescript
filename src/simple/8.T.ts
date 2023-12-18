@@ -12,7 +12,7 @@
   // 这是啥意思呢？现在当我们再将一个对象传递给 addID 时，我们已经告诉 TypeScript 来捕获它的类型了 —— 所以 T 就变成了我们传入的任何类型。addID 现在会知道我们传入的对象上有哪些属性。
 
 
-  // 但是，现在有另一个问题：任何东西都可以传入 addID ，TypeScript 将捕获类型而且并不会报告问题：
+  // 但是，现在有另一个问题：任何东西都可以传入 addID，TypeScript 将捕获类型而且并不会报告问题：
 
   let person1 = addID({ name: 'ConardLi', age: 17 });
   let person2 = addID('Jerry'); // 传递字符串也没问题
@@ -25,7 +25,7 @@
 
 
   // 当我们传入一个字符串时，TypeScript 没有发现任何问题。只有我们尝试访问 name 属性时才会报告错误。
-  // 所以，我们需要一个约束：我们需要通过将泛型类型 T 作为 object 的扩展，来告诉 TypeScript 只能接受对象:
+  // 所以，我们需要一个约束：我们需要通过将泛型类型 T 作为 object 的扩展，来告诉 TypeScript 只能接受对象：
 
   const addID2 = <T extends object>(obj: T) => {
     let id = Math.floor(Math.random() * 1000);

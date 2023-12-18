@@ -20,7 +20,7 @@ var strArr = ['1', '2'];
 
 
 /**
- * 定义boolean类型
+ * 定义 boolean 类型
  * @type {boolean}
  */
 var isSelected = false;
@@ -28,7 +28,7 @@ var isSelected = false;
 
 
 /**
- * 定义string类型
+ * 定义 string 类型
  * @type {string}
  */
 var strName = 'xyz';
@@ -38,19 +38,19 @@ var strName = 'xyz';
 // TypeScript 中添加的类型
 
 /**
- * 这是TypeScript定义的Navigator类型
+ * 这是 TypeScript 定义的 Navigator 类型
  * @type {Navigator}
  */
 var navigator;
 
 /**
- * 这是TypeScript定义的窗口类型
+ * 这是 TypeScript 定义的窗口类型
  * @type {Window}
  */
 var win;
 
 /**
- * 这是TypeScript定义的HTML元素类型
+ * 这是 TypeScript 定义的 HTML 元素类型
  * @type {HTMLElement}
  */
 var rootElement = document.getElementById('root');

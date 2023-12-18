@@ -3,7 +3,7 @@ sidebar: auto
 ---
 # TypeScript
 
-`TypeScript`是`JavaScript`的一个超集，主要提供了**类型系统**和对**ES6**的支持，它于2012年10月正式发布第一个版本。
+`TypeScript`是`JavaScript`的一个超集，主要提供了**类型系统**和对**ES6**的支持，它于 2012 年 10 月正式发布第一个版本。
 
 优势：
 
@@ -15,7 +15,7 @@ sidebar: auto
 
 ### Node.js
 
-你首先需要在[Node.js官网](https://nodejs.org/zh-cn/)按照你电脑的操作系统下载对应的`Node`版本进行安装。
+你首先需要在[Node.js 官网](https://nodejs.org/zh-cn/)按照你电脑的操作系统下载对应的`Node`版本进行安装。
 
 ### TypeScript
 你需要使用如下命令全局安装`TypeScript`:
@@ -142,8 +142,8 @@ let tsUndefined: undefined = undefined
 ```
 
 
-#### void空值
-我们知道在`JavaScript`中，是没有空值(`void`)的概念的，但在`TypeScript`中，可以使用`void`来表示一个没有返回值的函数：
+#### void 空值
+我们知道在`JavaScript`中，是没有空值 (`void`) 的概念的，但在`TypeScript`中，可以使用`void`来表示一个没有返回值的函数：
 
 ```ts
 function sayHello (): void {
@@ -162,8 +162,8 @@ let voidValue2: void = undefined
 ```
 
 
-#### void、null和undefined
-`void`和`null`与`undefined`是有一定区别的，在`TypeScript`中，`null`和`undefined`是所有类型的子类型，也就是说可以把`undefined`或`null`赋值给`number`等类型的变量:
+#### void、null 和 undefined
+`void`和`null`与`undefined`是有一定区别的，在`TypeScript`中，`null`和`undefined`是所有类型的子类型，也就是说可以把`undefined`或`null`赋值给`number`等类型的变量：
 
 ```ts
 let tsNumber1: number = undefined
@@ -187,7 +187,7 @@ let voidValue2: void = '123'
 在有以上内容的基础上，我们知道以下代码会报错：
 
 ```ts
-// 变量被定义为number，那么它只能接受number类型的值，不能改变其类型，会编译报错
+// 变量被定义为 number，那么它只能接受 number 类型的值，不能改变其类型，会编译报错
 let tsNumber: number = 123
 tsNumber = '123'
 
@@ -218,10 +218,10 @@ tsValue = '123'
 在以上的所有实例中，我们都为每一个变量提供了一个确定的类型，这种做法就叫做**类型注解**。而有些时候，当我们没有为其提供一个确定的类型，但提供了一个确定的值，那么`TypeScript`会根据我们给定的值的类型自动推断出这个变量的类型，这就叫**类型推断**。
 
 ```ts
-// typescript会自动为num1变量推断为number
+// typescript 会自动为 num1 变量推断为 number
 let num1 = 123
 
-// typescript会自动为num4变量推断为number
+// typescript 会自动为 num4 变量推断为 number
 let num2 = 456
 let num3 = 789
 let num4 = num2 + num3
@@ -234,7 +234,7 @@ let num4 = num2 + num3
 function add (num1: number, num2: number): number {
   return num1 + num2
 }
-// 或者省略函数的返回值类型，因为typescript会基于num1和num1全部为number类型，从而推断出函数返回值为number类型
+// 或者省略函数的返回值类型，因为 typescript 会基于 num1 和 num1 全部为 number 类型，从而推断出函数返回值为 number 类型
 function add (num1: number, num2: number) {
   return num1 + num2
 }
@@ -351,7 +351,7 @@ let person: Person = {
 ```ts
 interface Person {
   name: string,
-  // age属性是可选的
+  // age 属性是可选的
   age?: number
 }
 // 编译成功
@@ -367,7 +367,7 @@ let person2: Person = {
 
 
 #### 接口中的只读属性
-最后我们要介绍的知识点是只读属性，一旦在接口中标记了属性为只读的， 那么其不能被赋值。
+最后我们要介绍的知识点是只读属性，一旦在接口中标记了属性为只读的，那么其不能被赋值。
 
 ```ts
 interface Person {
@@ -414,7 +414,7 @@ const func3 = () => {
 function add (x: number, y: number): number {
   return x + y
 }
-console.log(add(1, 2))    // 输出3
+console.log(add(1, 2))    // 输出 3
 console.log(add(1, '2'))  // 报错
 
 ```
@@ -430,7 +430,7 @@ interface AddInterface {
 const add: AddInterface = function (x: number, y: number): number {
   return x + y
 }
-console.log(add(1, 2))    // 输出3
+console.log(add(1, 2))    // 输出 3
 
 ```
 
@@ -481,7 +481,7 @@ console.log(getArea(4, 5))  // 20
 function getArea (b: number = 1, a: number): number {
   return  a * b
 }
-// 此时必须显示的传递一个undefined进行占位
+// 此时必须显示的传递一个 undefined 进行占位
 console.log(getArea(undefined,4)) // 4
 console.log(getArea(4, 5))        // 20
 
@@ -492,7 +492,7 @@ console.log(getArea(4, 5))        // 20
 在`ES6`中，我们可以使用`...`符号进行收缩剩余参数，在`TypeScript`中，我们依然可以这么做：
 
 ```js
-// rest是一个数组，我们可以使用数组的类型来定义它
+// rest 是一个数组，我们可以使用数组的类型来定义它
 function getTotal (a: number, ...rest: number[]) {
   console.log(a)    // 1
   console.log(rest) // [2, 3, 4]
@@ -504,7 +504,7 @@ getTotal(1, 2, 3, 4,)
 
 
 #### 函数重载
-因为在`JavaScript`中，并没有限制函数参数的个数或者类型，因此`JavaScript`没有函数重载的概念，在`TypeScript`中对于函数重载的理解是：只要函数参数的类型或者函数参数的数量不同时，就可以认为这是两个函数(重载)。
+因为在`JavaScript`中，并没有限制函数参数的个数或者类型，因此`JavaScript`没有函数重载的概念，在`TypeScript`中对于函数重载的理解是：只要函数参数的类型或者函数参数的数量不同时，就可以认为这是两个函数 (重载)。
 
 ```ts
 // 前两个为函数声明，最后一个才是函数实现
@@ -544,10 +544,10 @@ class Teacher {
 }
 function print(person: Student | Teacher) {
   if (person instanceof Student) {
-    // 强制断言为Student类型
+    // 强制断言为 Student 类型
     (person as Student).sayHi()
   } else {
-    // 强制断言为Teacher类型
+    // 强制断言为 Teacher 类型
     (person as Teacher).sayHello()
   }
 }
@@ -602,12 +602,12 @@ handleEvent('dbclick')  // 编译报错
 ### 数组和元组
 
 #### 数组
-和普通的变量一样，数组中的类型定义也有一定的规则：类型+方括号表示
+和普通的变量一样，数组中的类型定义也有一定的规则：类型 + 方括号表示
 
 ```ts
-// 只允许存储number类型
+// 只允许存储 number 类型
 let numArray: number[] = [1, 2, 3]
-// 只允许存储string类型
+// 只允许存储 string 类型
 let strArray: string[] = ['1', '2', '3']
 
 ```
@@ -615,9 +615,9 @@ let strArray: string[] = ['1', '2', '3']
 值得一提的是，以上案例还有一种泛型方式的写法：
 
 ```ts
-// 只允许存储number类型
+// 只允许存储 number 类型
 let numArray: Array<number> = [1, 2, 3]
-// 只允许存储string类型
+// 只允许存储 string 类型
 let strArray: Array<string> = ['1', '2', '3']
 
 ```
@@ -626,7 +626,7 @@ let strArray: Array<string> = ['1', '2', '3']
 在数组中也可以使用联合类型：
 
 ```ts
-// 只允许存储number和string类型的值
+// 只允许存储 number 和 string 类型的值
 let tsArray: (number | string) [] = [1, '2', '3']
 
 ```
@@ -635,7 +635,7 @@ let tsArray: (number | string) [] = [1, '2', '3']
 我们知道，在数组中不仅可以存储基础数据类型，还可以存储对象类型，如果需要存储对象类型，可以用如下方式进行定义：
 
 ```ts
-// 只允许存储对象仅有name和age，且name为string类型，age为number类型的对象
+// 只允许存储对象仅有 name 和 age，且 name 为 string 类型，age 为 number 类型的对象
 let objArray: ({ name: string, age: number })[] = [
   { name: 'AAA', age: 23 }
 ]
@@ -662,7 +662,7 @@ let objArray: person[] = [
 对元组的理解是：一个数组如果知道它确定的长度，且每个位置的值的类型也是确定的，那么就可以把这样的数组称为元组。
 
 ```ts
-// tuple数组只有2个元素，并且第一个元素类型为string，第二个元素类型为number
+// tuple 数组只有 2 个元素，并且第一个元素类型为 string，第二个元素类型为 number
 let tuple: [string, number] = ['AAA', 123]
 
 ```
@@ -695,7 +695,7 @@ console.log(colors.blue)  // 2
 
 ```
 
-代码分析：我们定义一个`colors`的枚举类型，其取值只能是`red`、`green`、`blue`。我们可以在打印的内容发现，其输出值从0开始，依次累加1。这是枚举类型的默认行为，我们可以手动设置一个起始值：
+代码分析：我们定义一个`colors`的枚举类型，其取值只能是`red`、`green`、`blue`。我们可以在打印的内容发现，其输出值从 0 开始，依次累加 1。这是枚举类型的默认行为，我们可以手动设置一个起始值：
 
 ```ts
 enum colors  {
@@ -821,7 +821,7 @@ console.log(person1 === person2) // true
 ```
 
 
-#### TypeScript类的访问修饰符
+#### TypeScript 类的访问修饰符
 在以上的实例中，我们使用到了`TypeScript`中关于类的几种访问修饰符，它有三种：
 * `public`：公有的，在任何地方都可以访问到。
 * `protected`：受保护的，只能在类的内部及其类的子类内部使用。
@@ -949,7 +949,7 @@ interface Animal {
   sayHello (): void
 }
 interface Person extends Animal {
-  // Person接口继承了Animal，就拥有了Animal种所有的属性和方法
+  // Person 接口继承了 Animal，就拥有了 Animal 种所有的属性和方法
   name: string
 }
 
@@ -1046,7 +1046,7 @@ console.log(join(1, '2'))   // 12
 
 ```
 
-代码分析：在以上的案例中，`join`方法接受2个泛型类型，其中参数`a:T`，参数`b:p`，因此`console.log(join(1, '2'))`会正确被编译并输出12。
+代码分析：在以上的案例中，`join`方法接受 2 个泛型类型，其中参数`a:T`，参数`b:p`，因此`console.log(join(1, '2'))`会正确被编译并输出 12。
 
 #### 类中的泛型
 泛型同样可以使用在类中。
@@ -1165,7 +1165,7 @@ interface Person {
   address: string
 }
 interface Person {
-  // 报错，name类型冲突
+  // 报错，name 类型冲突
   name: number,
   age: 23
 }
@@ -1260,12 +1260,12 @@ $ tsc
 当我们在浏览器中运行`index.html`文件后，我们可以在浏览器下正确的看到我们想要的输出内容。
 
 当我们在打开`page.js`文件时，我们可以发现：
-![page.js代码](../images/typescript/1.png)
+![page.js 代码](../images/typescript/1.png)
 
 **在全局作用域环境下，我们一次性引入了四个全局变量**：`Header`、`Content`、`Footer`和`Page`。要解决这个问题，我们可以使用`namespace`命令空间：
 
 ```ts
-// 使用命名空间包裹我们的代码并把Page类导出出去
+// 使用命名空间包裹我们的代码并把 Page 类导出出去
 namespace Home {
   class Header {
     constructor () {
@@ -1300,7 +1300,7 @@ namespace Home {
 ```
 
 随后，再次使用`tsc`命令重新编译代码，编译后的`page.js`如下：
-![Page.js代码](../images/typescript/2.png)
+![Page.js 代码](../images/typescript/2.png)
 
 再次修改`index.html`中的代码，我们依然能够得到跟前面示例代码一样的输出结果：
 

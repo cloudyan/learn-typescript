@@ -1,6 +1,6 @@
 // @ts-check
 // 定义构造器 @class, @constructor
-// - @class/@constructor可以用来定义构造函数，并且**只允许通过 `new` 关键字来调用构造函数**。
+// - @class/@constructor 可以用来定义构造函数，并且**只允许通过 `new` 关键字来调用构造函数**。
 
 /**
  * @constructor
@@ -16,6 +16,6 @@ Rectangle.prototype.getArea = function() {
   return this.width * this.height
 }
 
-// 必须要通过new来调用，不然编辑器会报错
+// 必须要通过 new 来调用，不然编辑器会报错
 var rectrangele = new Rectangle(30, 40);
 
