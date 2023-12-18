@@ -5,25 +5,26 @@
 // 3. {} 空对象类型和大 Object 一样 也是表示原始类型和非原始类型的集合
 // 4. 类 在 TypeScript 中，我们通过 Class 关键字来定义一个类
 // 5. 函数 参见 function.ts
+{
+  // 使用特定的对象类型注释声明一个名为 person 的变量
+  let person: {
+    name: string;
+    age: number;
+    isProgrammer: boolean;
+  };
 
-// 使用特定的对象类型注释声明一个名为 person 的变量
-let person: {
-  name: string;
-  age: number;
-  isProgrammer: boolean;
-};
+  // 给 person 分配一个具有所有必要属性和值类型的对象
+  person = {
+    name: 'ConardLi',
+    age: 17,
+    isProgrammer: true,
+  };
 
-// 给 person 分配一个具有所有必要属性和值类型的对象
-person = {
-  name: 'ConardLi',
-  age: 17,
-  isProgrammer: true,
-};
+  person.age = '17'; // ERROR: should be a number
 
-person.age = '17'; // ERROR: should be a number
-
-person = {
-  name: 'Tom',
-  age: 3,
-};
-// ERROR: missing the isProgrammer property
+  person = {
+    name: 'Tom',
+    age: 3,
+  };
+  // ERROR: missing the isProgrammer property
+}

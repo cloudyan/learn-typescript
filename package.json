@@ -7,7 +7,14 @@
     "doc": "docs"
   },
   "scripts": {
+    "preinstall": "npx only-allow pnpm",
+    "prepare": "husky install",
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "lint-staged": {
+    "*": [
+      "autocorrect --fix"
+    ]
   },
   "keywords": [],
   "author": "",
@@ -15,6 +22,9 @@
   "types": "./index.d.ts",
   "devDependencies": {
     "@types/react": "^18.2.23",
+    "autocorrect-node": "^2.9.0",
+    "husky": "^8.0.3",
+    "lint-staged": "^15.2.0",
     "typescript": "^5.2.2"
   },
   "dependencies": {

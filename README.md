@@ -99,9 +99,10 @@ export type UserProps = {
 
 ### 其他文档
 
-- 推荐:[TypeScript 基础类型](https://mp.weixin.qq.com/s/J3BM-Sb3okUy0-J_y7Fnzg)
+- 推荐: [TypeScript 基础类型](https://mp.weixin.qq.com/s/J3BM-Sb3okUy0-J_y7Fnzg)
   - [TypeScript 入门](https://juejin.cn/post/7018805943710253086)
-- 入门:[TypeScript 终极初学者指南](https://mp.weixin.qq.com/s/PwfuaEa9OD9XxVHLZA1TtA)
+- 入门: [TypeScript 终极初学者指南](https://mp.weixin.qq.com/s/PwfuaEa9OD9XxVHLZA1TtA)
+- 系列: 冴羽 [TypeScript 系列](https://juejin.cn/column/7029490086710345742)
 - [Typescript 类型编程，从入门到念头通达](https://juejin.cn/post/7132490947320872974)
 - [使用 TypeScript 的几个常见错误！](https://mp.weixin.qq.com/s/ud0LFGXv0K6hj_bYOSbnHA)
 - [淘宝店铺 TypeScript 研发规约落地实践](https://mp.weixin.qq.com/s/a3OKOep9W7Cu81j7bKp3RQ)
